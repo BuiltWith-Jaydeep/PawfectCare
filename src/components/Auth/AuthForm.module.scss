@@ -1,0 +1,63 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/animations';
+
+.authForm {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.inputGroup {
+  position: relative;
+  margin: 2rem 0;
+}
+
+.input {
+  width: 100%;
+  padding: 1.2rem;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  background: transparent;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-bottom-color: $primary-color;
+  }
+}
+
+.label {
+  position: absolute;
+  left: 1rem;
+  top: 1.2rem;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  color: #666;
+}
+
+.labelFloating {
+  transform: translateY(-1.8rem) scale(0.8);
+  color: $primary-color !important;
+}
+
+.submitButton {
+  background: linear-gradient(45deg, #2196f3, #e91e63);
+  border: none;
+  padding: 1rem 2rem;
+  color: white;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.errorMessage {
+  color: #ff4757;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  animation: shake 0.5s ease-in-out;
+}
