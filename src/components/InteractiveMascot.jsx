@@ -1,5 +1,3 @@
-// D:\pawfectcare\animal-hospital-ui\src\components\Auth\InteractiveMascot.jsx
-
 import { motion } from 'framer-motion';
 import { FaDog } from 'react-icons/fa';
 

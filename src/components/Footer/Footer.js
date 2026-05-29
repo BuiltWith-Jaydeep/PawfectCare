@@ -7,15 +7,29 @@ const Footer = () => {
   const footerLinks = [
     {
       title: 'Quick Links',
-      items: ['Home', 'Services', 'About', 'Contact']
+      items: [
+        { name: 'Home', link: '/' },
+        { name: 'Services', link: '/services' },
+        { name: 'About', link: '/terms-and-conditions' },
+        { name: 'Contact', link: '/contact' }
+      ]
     },
     {
       title: 'Legal',
-      items: ['Privacy Policy', 'Terms of Service', 'Cookie Policy']
+      items: [
+        { name: 'Privacy Policy', link: '/terms-and-conditions' },
+        { name: 'Terms of Service', link: '/terms-and-conditions' },
+        { name: 'Cookie Policy', link: '/terms-and-conditions' }
+      ]
     },
     {
       title: 'Social',
-      items: ['Facebook', 'Instagram', 'Twitter', 'LinkedIn']
+      items: [
+        { name: 'X', link: 'https://x.com/PawfectCare_' },
+        { name: 'Facebook', link: 'https://www.facebook.com/' },
+        { name: 'Instagram', link: 'https://www.instagram.com/pawfect.care_247?igsh=YWtlM2FleGo3OTlm' },
+        { name: 'LinkedIn', link: 'https://www.linkedin.com/in/prajapati-jayadip-886a21324?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' }
+      ]
     }
   ];
 
@@ -27,19 +41,40 @@ const Footer = () => {
       className="main-footer"
     >
       <div className="footer-content">
-        {/* Contact Info */}
+        {/* Contact us */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           className="footer-section"
         >
           <h3 className="footer-heading">Contact Us</h3>
-          <p>📞 +91 9725934848</p>
-          <p>📧 hello@pawfectcare.com</p>
-          <p>📍 123 Pet Care Street, Baroda</p>
+          <p>
+            📞{' '}
+            <Link to="/contact">
+              <a href="tel:+919725934848" onClick={(e) => e.stopPropagation()}>
+                +91 9725934848
+              </a>
+            </Link>
+          </p>
+          <p>
+            📧{' '}
+            <a href="mailto:hello@pawfectcare.com">
+              hello@pawfectcare.com
+            </a>
+          </p>
+          <p>
+            📍{' '}
+            <a 
+              href="https://www.google.com/maps/dir/22.5050624,73.4593024/Dr.Sisodiya's+Veterinary+Clinic,+New+Kumbharwada,+Bhatia+Bazar+Old,+Porbandar,+Gujarat+360575/@22.1302944,70.2180864,8z/data=!3m1!4b1!4m9!4m8!1m1!4e1!1m5!1m1!1s0x3956344e7a1a44ed:0xe9a7d9b01ca1d841!2m2!1d69.607261!2d21.645762?entry=ttu&g_ep=EgoyMDI1MDMyNC4wIKXMDSoASAFQAw%3D%3D" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              123 Pet Care Street, Baroda
+            </a>
+          </p>
         </motion.div>
 
-        {/* Footer Links */}
+        {/* Footer ni Links */}
         {footerLinks.map((section, index) => (
           <motion.div
             key={section.title}
@@ -52,19 +87,25 @@ const Footer = () => {
             <ul className="footer-links">
               {section.items.map((item) => (
                 <motion.li
-                  key={item}
+                  key={item.name}
                   whileHover={{ x: 5 }}
                 >
-                  <Link to={`/${item.toLowerCase().replace(' ', '-')}`}>
-                    {item}
-                  </Link>
+                  {item.link.startsWith('http') ? (
+                    <a href={item.link} target="_blank" rel="noopener noreferrer">
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link to={item.link}>
+                      {item.name}
+                    </Link>
+                  )}
                 </motion.li>
               ))}
             </ul>
           </motion.div>
         ))}
 
-        {/* Newsletter */}
+        {/* paper */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -99,7 +140,7 @@ const Footer = () => {
         © {new Date().getFullYear()} Pawfect Care. All rights reserved.
       </motion.div>
 
-      {/* Animated Divider */}
+      {/* Amation subtract */}
       <motion.div 
         className="footer-divider"
         initial={{ scaleX: 0 }}

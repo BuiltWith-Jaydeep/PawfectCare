@@ -1,136 +1,75 @@
-import React, { useEffect, useState } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-import './IntroAnimation.css';
-
-const textVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: 20,
-    scale: 0.8
-  },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      delay: i * 0.3,
-      duration: 0.8,
-      ease: [0.175, 0.885, 0.32, 1.275] // Custom cubic bezier
-    },
-  }),
-};
-
-const particleVariants = {
-  hidden: { opacity: 0 },
-  visible: (i) => ({
-    opacity: [0, 0.6, 0],
-    scale: [0, 1.2, 0],
-    transition: {
-      duration: 2 + Math.random() * 2,
-      delay: i * 0.1,
-      repeat: Infinity,
-      repeatType: "loop"
-    }
-  })
-};
+import React, { useEffect } from 'react';
+import { motion } from 'framer-motion';
+import mascot from './assets/mascot.svg';
+import pawPrint from './assets/paw-print.svg';
+import './IntroAnimation.scss';
 
 const IntroAnimation = ({ onAnimationComplete }) => {
-  const [particles, setParticles] = useState([]);
-  const controls = useAnimation();
+  const logoText = "PawfectCare";
 
   useEffect(() => {
-    const newParticles = Array.from({ length: 20 }).map((_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 30 + 10
-    }));
-    setParticles(newParticles);
-
     const sequence = async () => {
-      await controls.start("visible");
-      setTimeout(onAnimationComplete, 2000);
+      
+      await new Promise((resolve) => setTimeout(resolve, 3500));
+      onAnimationComplete(); // Trigger redirect to home page
     };
     sequence();
-  }, [controls, onAnimationComplete]);
-
-  const textArray = ['Welcome', 'to', 'Pawfect', 'Care'];
+  }, [onAnimationComplete]);
 
   return (
-    <div className="intro-container">
-      {/* Particles Background */}
-      {particles.map((particle) => (
-        <motion.div
-          key={particle.id}
-          className="particle"
-          variants={particleVariants}
-          custom={particle.id}
-          initial="hidden"
-          animate="visible"
-          style={{
-            left: `${particle.x}%`,
-            top: `${particle.y}%`,
-            width: particle.size,
-            height: particle.size,
-          }}
+    <div className="intro-animation">
+      {/* Pulse Line with Glow Effect */}
+      <motion.svg className="pulse-line" viewBox="0 0 100 20">
+        <motion.path
+          d="M0 10 L20 10 L25 5 L30 15 L35 10 L50 10 L55 5 L60 15 L65 10 L80 10 L100 10"
+          stroke="#4a90e2"
+          strokeWidth="4"
+          fill="none"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 0.3 }}
+          transition={{ duration: 1, ease: "easeInOut" }}
         />
-      ))}
+        <motion.path
+          d="M0 10 L20 10 L25 5 L30 15 L35 10 L50 10 L55 5 L60 15 L65 10 L80 10 L100 10"
+          stroke="#4a90e2"
+          strokeWidth="2"
+          fill="none"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 1, ease: "easeInOut" }}
+        />
+      </motion.svg>
 
-      {/* Main Image Container */}
-      <motion.div 
-        className="image-container"
-        animate={{
-          rotateY: 360,
-          scale: [0.9, 1.1, 0.9],
-        }}
-        transition={{
-          duration: 8,
-          ease: "easeInOut",
-          repeat: Infinity,
-        }}
-      >
+      {/* Content Container for Mascot and Logo */}
+      <div className="content">
         <motion.img
-          src="/assets/images/pet.png"
-          alt="Rotating Pet"
-          className="intro-image"
-          animate={{
-            rotateZ: 360
-          }}
-          transition={{
-            duration: 6,
-            ease: "linear",
-            repeat: Infinity
-          }}
+          src={mascot}
+          className="mascot"
+          initial={{ x: '-100vw' }}
+          animate={{ x: 0 }}
+          transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
         />
-      </motion.div>
-
-      {/* Text Animation */}
-      <div className="intro-text">
-        {textArray.map((word, index) => (
-          <motion.span
-            key={index}
-            custom={index}
-            variants={textVariants}
-            initial="hidden"
-            animate={controls}
-            className="intro-word"
-            whileHover={{ 
-              scale: 1.2, 
-              y: -10,
-              textShadow: "0 10px 20px rgba(0,0,0,0.3)"
-            }}
-          >
-            {word}
-          </motion.span>
-        ))}
+        <div className="intro-logo">
+          {logoText.split('').map((letter, index) => (
+            <motion.span
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1 + index * 0.1, duration: 0.5, ease: "easeOut" }}
+            >
+              {letter}
+            </motion.span>
+          ))}
+        </div>
       </div>
 
-      {/* Progress Bar */}
-      <motion.div 
-        className="progress-bar"
-        initial={{ width: '0%' }}
-        animate={{ width: '100%' }}
-        transition={{ duration: 5, ease: "linear" }}
+      {/* Paw Print */}
+      <motion.img
+        src={pawPrint}
+        className="paw-print"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ delay: 2, duration: 0.5, ease: "easeOut" }}
       />
     </div>
   );

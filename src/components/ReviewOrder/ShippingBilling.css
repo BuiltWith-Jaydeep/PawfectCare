@@ -1,0 +1,55 @@
+.shippingBilling {
+  margin: 20px 0;
+}
+
+.shippingBilling h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.addressContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.addressCard {
+  width: 48%;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  position: relative;
+  background-color: #fff;
+}
+
+.addressCard h3 {
+  font-size: 16px;
+  margin: 0 0 10px;
+}
+
+.addressCard p {
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+  
+.addressCard a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.editIcon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+}
+
+.billingToggle {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.billingToggle input {
+  margin-right: 5px;
+}

@@ -1,0 +1,358 @@
+// Variables
+$primary-color: #87CEEB; // Soft blue
+$secondary-color: #98D4A7; // Soft green
+$accent-color: #F5E8C7; // Earthy beige
+$font-heading: 'Fredoka One', sans-serif;
+$font-body: 'Roboto', sans-serif;
+
+.adoption-assistance {
+  font-family: $font-body;
+  color: #333;
+
+  // Header
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background-color: $primary-color;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    .logo {
+      height: 60px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      margin: 0;
+
+      li a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: color 0.3s;
+
+        &:hover {
+          color: $accent-color;
+        }
+      }
+    }
+  }
+
+  // Hero
+  .hero {
+  
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+
+      h1 {
+        font-family: $font-heading;
+        font-size: 4rem;
+        margin-bottom: 2rem;
+      }
+
+      button {
+        background-color: $accent-color;
+        border: none;
+        padding: 1rem 3rem;
+        font-size: 1.5rem;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: darken($accent-color, 10%);
+        }
+      }
+    }
+  }
+
+  // Available Pets
+  .available-pets {
+    padding: 4rem 2rem;
+    text-align: center;
+
+    h2 {
+      font-family: $font-heading;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .pets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+
+      .pet-card {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position: relative;
+
+        .pet-photo {
+          height: 180px;
+          background: linear-gradient(45deg, $primary-color, $secondary-color);
+          border-radius: 10px;
+          margin-bottom: 1rem;
+        }
+
+        h3 {
+          font-family: $font-heading;
+          font-size: 1.6rem;
+          color: $secondary-color;
+          margin-bottom: 0.5rem;
+        }
+
+        p {
+          font-size: 1.1rem;
+          color: #666;
+          margin: 0.5rem 0;
+        }
+
+        .learn-more {
+          position: absolute;
+          bottom: 1rem;
+          left: 50%;
+          transform: translateX(-50%);
+          background-color: $secondary-color;
+          color: white;
+          border: none;
+          padding: 0.8rem 1.5rem;
+          border-radius: 20px;
+          font-size: 1.1rem;
+          cursor: pointer;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: darken($secondary-color, 10%);
+          }
+        }
+      }
+    }
+  }
+
+  // Adoption Process
+  .adoption-process {
+    padding: 4rem 2rem;
+    background-color: $accent-color;
+
+    h2 {
+      font-family: $font-heading;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .steps {
+      max-width: 800px;
+      margin: 0 auto;
+
+      .step-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+
+        .step-number {
+          width: 50px;
+          height: 50px;
+          background-color: $primary-color;
+          color: white;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.5rem;
+          margin-right: 1.5rem;
+        }
+
+        h3 {
+          font-family: $font-heading;
+          font-size: 1.6rem;
+          margin-bottom: 0.5rem;
+        }
+
+        p {
+          font-size: 1.1rem;
+          color: #666;
+        }
+      }
+    }
+  }
+
+  // Success Stories
+  .success-stories {
+    padding: 4rem 2rem;
+
+    h2 {
+      font-family: $font-heading;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .stories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+
+      .story-card {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+
+        .story-photo {
+          height: 150px;
+          background: linear-gradient(45deg, $primary-color, $secondary-color);
+          border-radius: 10px;
+          margin-bottom: 1rem;
+        }
+
+        h3 {
+          font-family: $font-heading;
+          font-size: 1.4rem;
+          color: $secondary-color;
+          margin-bottom: 0.5rem;
+        }
+
+        p {
+          font-size: 1.1rem;
+          color: #666;
+          font-style: italic;
+        }
+      }
+    }
+  }
+
+  // CTA
+  .cta {
+    padding: 4rem 2rem;
+    background-color: $secondary-color;
+    text-align: center;
+    color: white;
+
+    h2 {
+      font-family: $font-heading;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    button {
+      background-color: $accent-color;
+      border: none;
+      padding: 1rem 3rem;
+      font-size: 1.5rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: darken($accent-color, 10%);
+      }
+    }
+  }
+
+  // Footer
+  .footer {
+    padding: 2rem;
+    background-color: $primary-color;
+    color: white;
+    text-align: center;
+
+    .social-media,
+    .quick-links {
+      margin: 1rem 0;
+
+      a {
+        color: white;
+        margin: 0 1rem;
+        text-decoration: none;
+        font-size: 1.1rem;
+
+        &:hover {
+          color: $accent-color;
+        }
+      }
+    }
+
+    .contact p {
+      margin: 0.5rem 0;
+    }
+  }
+
+  // Responsive Design
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      padding: 1rem;
+
+      nav ul {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    .hero {
+      height: 400px;
+
+      .hero-content {
+        h1 {
+          font-size: 2.5rem;
+        }
+
+        button {
+          padding: 0.8rem 2rem;
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    .available-pets .pets-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .adoption-process .steps .step-item {
+      flex-direction: column;
+      text-align: center;
+
+      .step-number {
+        margin: 0 auto 1rem;
+      }
+    }
+
+    .success-stories .stories-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

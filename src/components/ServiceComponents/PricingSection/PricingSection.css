@@ -1,0 +1,233 @@
+.pricing-section {
+  padding: 100px 20px;
+  background: #f9f4ea;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header Section Styles */
+.pricing-section .section-divider {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 80px 0;
+  text-align: center;
+}
+
+.pricing-section .section-divider.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pricing-section .divider-content {
+  display: inline-block;
+  padding: 30px 60px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-section .sub-heading {
+  font-size: 1.3rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.pricing-section .main-heading {
+  font-size: 2.8rem;
+  color: #333;
+}
+
+.pricing-section .highlight {
+  color: #ff6b6b;
+}
+
+/* Pricing Cards Container */
+.pricing-section .pricing-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pricing-section .pricing-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px 0;
+}
+
+/* Individual Pricing Card Styles */
+.pricing-section .pricing-card {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 320px;
+  border-radius: 20px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pricing-section .pricing-card.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pricing-section .pricing-card::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    #ff6b6b 50%,
+    transparent 60%
+  );
+  background-size: 300% 300%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.pricing-section .pricing-card:hover::after {
+  opacity: 1;
+  animation: borderFlow 1.5s linear infinite;
+}
+
+@keyframes borderFlow {
+  0% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+.pricing-section .pricing-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.pricing-section .plan-name {
+  font-size: 1.6rem;
+  color: white;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+.pricing-section .price {
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.pricing-section .price-suffix {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.pricing-section .services-list {
+  list-style: none;
+  padding: 0;
+  margin: 30px 0;
+  flex-grow: 1;
+}
+
+.pricing-section .services-list li {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pricing-section .missing-feature {
+  color: #ff6b6b;
+  font-weight: bold;
+}
+
+.pricing-section .order-now-button {
+  display: inline-block;
+  padding: 15px 40px;
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: auto; /* Pushes button to bottom */
+}
+
+.pricing-section .order-now-button:hover {
+  background: #ff4a3d;
+  transform: translateY(-3px);
+}
+
+/* Key Features Section Styles */
+.pricing-section .key-features {
+  margin-top: 40px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pricing-section .key-features.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pricing-section .key-features h4 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.pricing-section .key-features ul {
+  list-style: none;
+  padding: 0;
+}
+
+.pricing-section .key-features li {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .pricing-section .pricing-cards {
+    flex-wrap: wrap;
+  }
+
+  .pricing-section .pricing-card {
+    width: 45%;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pricing-section .pricing-card {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .pricing-section .main-heading {
+    font-size: 2.2rem;
+  }
+
+  .pricing-section .plan-name {
+    font-size: 1.4rem;
+  }
+
+  .pricing-section .price {
+    font-size: 2.5rem;
+  }
+}

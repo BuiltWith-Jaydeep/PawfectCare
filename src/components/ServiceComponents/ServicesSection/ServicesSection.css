@@ -1,0 +1,177 @@
+
+.services-section {
+  position: relative;
+  padding: 80px 20px;
+  overflow: hidden;
+}
+
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.background-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+
+.content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #f9f4ea;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+
+.section-heading {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+
+.services-layout {
+  display: flex;
+  gap: 30px;
+}
+
+/* Left Side Emergency Services Section */
+.large-service {
+  flex: 1;
+  background: white;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.large-service .service-image {
+  width: 100%;
+  height: 50%;
+  
+  overflow: hidden;
+}
+
+.large-service img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10%;
+  
+}
+
+.large-service .service-content {
+  padding: 40px;
+}
+
+.large-service h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.large-service p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.emergency-style {
+  background: rgba(255, 107, 107, 0.1);
+  border: 2px solid #ff6b6b;
+}
+
+.emergency-style .service-content h2 {
+  color: #ff4a3d; 
+}
+
+.emergency-style .service-content p {
+  color: #ff6b6b; 
+}
+
+/* Right Side Other Services Section */
+.small-services-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.service-bar {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow:  20px 15px rgba(0, 0, 0, 0.1);
+}
+
+.service-bar .service-image {
+  flex: 1;
+  border-radius: 30px;
+  max-width: 150px;
+  height: 150px;
+  margin: 20px;
+  overflow: hidden;
+}
+
+.service-bar img {
+  width: 100%;
+  height: 100%;
+  
+  object-fit: cover;
+}
+
+.service-bar .service-content {
+  flex: 2;
+  padding: 20px;
+}
+
+.service-bar h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.service-bar p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+
+.book-now-button {
+  padding: 10px 20px;
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.book-now-button:hover {
+  background: #ff4a3d;
+}
+

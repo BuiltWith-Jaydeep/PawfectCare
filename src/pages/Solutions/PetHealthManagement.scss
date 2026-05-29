@@ -1,0 +1,322 @@
+// Variables
+$primary-color: #87CEEB; // Soft blue
+$secondary-color: #98D4A7; // Soft green
+$accent-color: #F5E8C7; // Earthy beige
+$font-heading: 'Fredoka One', sans-serif;
+$font-body: 'Roboto', sans-serif;
+
+.pet-health-management {
+  font-family: $font-body;
+  color: #333;
+
+  // Header
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background-color: $primary-color;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    .logo {
+      height: 60px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      margin: 0;
+
+      li a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: color 0.3s;
+
+        &:hover {
+          color: $accent-color;
+        }
+      }
+    }
+  }
+
+  // Hero
+  .hero {
+    background: linear-gradient(135deg, $primary-color, $secondary-color);
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+
+    .hero-content {
+      h1 {
+        font-family: $font-heading;
+        font-size: 4rem;
+        margin-bottom: 2rem;
+      }
+
+      button {
+        background-color: $accent-color;
+        border: none;
+        padding: 1rem 3rem;
+        font-size: 1.5rem;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: darken($accent-color, 10%);
+        }
+      }
+    }
+  }
+
+  // Tips & Guidelines
+  .tips-guidelines {
+    padding: 4rem 2rem;
+    text-align: center;
+
+    h2 {
+      font-family: $font-heading;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .columns {
+      display: flex;
+      justify-content: space-around;
+      gap: 2rem;
+
+      .column {
+        width: 45%;
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        h3 {
+          font-family: $font-heading;
+          font-size: 1.8rem;
+          color: $secondary-color;
+          margin-bottom: 1.5rem;
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+          text-align: left;
+
+          li {
+            margin: 1rem 0;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+
+            .icon {
+              font-size: 1.5rem;
+              margin-right: 0.8rem;
+              color: $primary-color;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Infographic
+  .infographic {
+    padding: 4rem 2rem;
+    background-color: $accent-color;
+
+    h2 {
+      font-family: $font-heading;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+
+      .statistic {
+        width: 200px;
+        padding: 1.5rem;
+        background-color: white;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+
+        h4 {
+          font-size: 1.2rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .value {
+          font-size: 2.5rem;
+          color: $secondary-color;
+          margin: 0.5rem 0;
+        }
+
+        .description {
+          font-size: 0.9rem;
+          color: #666;
+        }
+      }
+    }
+  }
+
+  // Resources
+  .resources {
+    padding: 4rem 2rem;
+
+    h2 {
+      font-family: $font-heading;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+
+      .resource-card {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+
+        .thumbnail {
+          height: 150px;
+          background: linear-gradient(45deg, $primary-color, $secondary-color);
+          border-radius: 8px;
+          margin-bottom: 1rem;
+        }
+
+        h3 {
+          font-size: 1.4rem;
+          margin-bottom: 0.5rem;
+        }
+
+        p {
+          font-size: 1rem;
+          color: #666;
+        }
+      }
+    }
+  }
+
+  // CTA
+  .cta {
+    padding: 4rem 2rem;
+    background-color: $secondary-color;
+    text-align: center;
+    color: white;
+
+    h2 {
+      font-family: $font-heading;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    button {
+      background-color: $accent-color;
+      border: none;
+      padding: 1rem 3rem;
+      font-size: 1.5rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: darken($accent-color, 10%);
+      }
+    }
+  }
+
+  // Footer
+  .footer {
+    padding: 2rem;
+    background-color: $primary-color;
+    color: white;
+    text-align: center;
+
+    .social-media,
+    .quick-links {
+      margin: 1rem 0;
+
+      a {
+        color: white;
+        margin: 0 1rem;
+        text-decoration: none;
+        font-size: 1.1rem;
+
+        &:hover {
+          color: $accent-color;
+        }
+      }
+    }
+
+    .contact p {
+      margin: 0.5rem 0;
+    }
+  }
+
+  // Responsive Design
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      padding: 1rem;
+
+      nav ul {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    .hero {
+      height: 400px;
+
+      .hero-content {
+        h1 {
+          font-size: 2.5rem;
+        }
+
+        button {
+          padding: 0.8rem 2rem;
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    .tips-guidelines .columns {
+      flex-direction: column;
+      align-items: center;
+
+      .column {
+        width: 90%;
+      }
+    }
+
+    .infographic .stats {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}

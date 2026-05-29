@@ -1,0 +1,253 @@
+@import '../../assets/styles/_animations.scss';
+
+$primary-color: #667eea;
+$secondary-color: #764ba2;
+$dark-text: #2d3748;
+$secondary-text: #718096;
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, $primary-color, $secondary-color);
+}
+
+.hero {
+  text-align: center;
+  padding: 6rem 2rem;
+  background: rgba(white, 0.9);
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+  
+  h1 {
+    font-size: 2.5rem;
+    color: $dark-text;
+    margin: 1rem 0;
+    animation: fadeInUp 1s ease;
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: $secondary-text;
+  }
+
+  .logo {
+    height: 80px;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: -5rem auto 0;
+  padding: 2rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    margin-top: -2rem;
+  }
+}
+
+.formContainer,
+.infoContainer {
+  background: white;
+  padding: 3rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border: 1px solid #e2e8f0;
+  
+  h2,
+  h3 {
+    margin-bottom: 2rem;
+    color: $primary-color;
+  }
+}
+
+.formGroup {
+  position: relative;
+  margin-bottom: 2.5rem;
+  
+  .icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 1.2rem;
+    z-index: 1;
+  }
+  
+  input,
+  textarea {
+    width: 100%;
+    padding: 1.2rem 1.2rem 1.2rem 3.5rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    
+    &:focus {
+      border-color: $primary-color;
+      outline: none;
+      + label {
+        transform: translateY(-180%);
+        font-size: 0.8rem;
+        color: $primary-color;
+      }
+    }
+    
+    &:not(:placeholder-shown) + label {
+      transform: translateY(-180%);
+      font-size: 0.8rem;
+    }
+  }
+  
+  label {
+    position: absolute;
+    left: 3.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    padding: 0 0.5rem;
+    color: #666;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  
+  textarea {
+    height: 150px;
+    resize: vertical;
+  }
+}
+
+.error {
+  color: #e53e3e;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+button {
+  background: $primary-color;
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  
+  &:hover {
+    background: darken($primary-color, 10%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+  
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+  position: absolute;
+  right: 1rem;
+}
+
+.infoContainer {
+  .contactItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: rgba($primary-color, 0.05);
+      transform: translateX(10px);
+    }
+    
+    i {
+      font-size: 1.5rem;
+      color: $primary-color;
+      margin-right: 1rem;
+      width: 40px;
+      text-align: center;
+    }
+    
+    h4 {
+      margin-bottom: 0.5rem;
+      color: $dark-text;
+    }
+    
+    p {
+      color: $secondary-text;
+      line-height: 1.5;
+    }
+  }
+}
+
+.mapContainer {
+  margin-top: 2rem;
+  height: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
+
+.backToHome {
+  margin-top: 1.5rem;
+  animation: fadeInUp 0.8s ease 0.5s both;
+  
+  button {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: $primary-color;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border: 2px solid $primary-color;
+    border-radius: 25px;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: $primary-color;
+      color: white;
+      box-shadow: 0 4px 15px rgba($primary-color, 0.3);
+    }
+    
+    i {
+      margin-right: 0.5rem;
+      transition: transform 0.3s ease;
+    }
+  }
+  
+  &:hover {
+    button i {
+      transform: translateX(-5px);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 4rem 1rem;
+  }
+}

@@ -1,0 +1,224 @@
+D:\Animal Hospital Management Sys\PawfectCare\pawfectcare
+├── .env
+├── .eslintrc.json
+├── .gitattributes
+├── .gitignore
+├── .hintrc
+├── babel.config.json
+├── package.json
+├── package-lock.json
+├── README.md
+├── structure.txt
+├── .git                       (ignored: git repository folder)
+├── backend
+│   ├── .env
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── server.js
+│   ├── controllers
+│   │   ├── adoptionController.js
+│   │   ├── authController.js
+│   │   ├── consultationController.js
+│   │   ├── dayCareController.js
+│   │   ├── groomingController.js
+│   │   ├── orderController.js
+│   │   ├── subscriptionController.js
+│   │   ├── userController.js
+│   │   └── vaccinationController.js
+│   ├── middleware
+│   │   └── auth.js
+│   ├── models
+│   │   ├── Adoption.js
+│   │   ├── Consultation.js
+│   │   ├── DayCare.js
+│   │   ├── Grooming.js
+│   │   ├── Order.js
+│   │   ├── Subscription.js
+│   │   ├── User.js
+│   │   └── Vaccination.js
+│   ├── node_modules            (ignored: node modules folder)
+│   └── routes
+│       ├── adoption.js
+│       ├── auth.js
+│       ├── consultation.js
+│       ├── dayCare.js
+│       ├── grooming.js
+│       ├── order.js
+│       ├── subscription.js
+│       ├── user.js
+│       ├── vaccination.js
+│       └── webhook.js
+├── node_modules               (ignored: node modules folder)
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── logo192.png
+│   ├── logo512.png
+│   ├── manifest.json
+│   ├── robots.txt
+│   ├── assets
+│   │   ├── 1.mp4
+│   │   ├── 2.mp4
+│   │   ├── 3.mp4
+│   │   └── images
+│   │       └── products      (ignored: contains 23 img files)
+│   └── images                (contains 11 img files)
+└── src
+    ├── App.css
+    ├── App.js
+    ├── App.test.js
+    ├── index.css
+    ├── index.js
+    ├── logo.svg
+    ├── reportWebVitals.js
+    ├── setupProxy.js
+    ├── setupTests.js
+    ├── assets
+    │   └── styles
+    │       ├── _animations.scss
+    │       ├── _variables.scss
+    │       └── App.scss
+    ├── components
+    │   ├── AdoptionForm.jsx
+    │   ├── BookingF.css
+    │   ├── BookingForm.css
+    │   ├── BookingForm.jsx
+    │   ├── BookingForms.css
+    │   ├── DayCare.css
+    │   ├── DayCare.jsx
+    │   ├── GroomingForm.jsx
+    │   ├── InteractiveMascot.jsx
+    │   ├── LoginForm.jsx
+    │   ├── ParticlesBackground.jsx
+    │   ├── PaymentSuccess.css
+    │   ├── PaymentSuccess.jsx
+    │   ├── SignupForm.jsx
+    │   ├── Success.jsx
+    │   ├── VaccinationForm.css
+    │   ├── VaccinationForm.jsx
+    │   ├── Account
+    │   │   ├── AdoptionDetails.jsx
+    │   │   ├── ConsultationDetails.jsx
+    │   │   ├── Dashboard.js
+    │   │   ├── DayCareDetails.jsx
+    │   │   ├── Grooming Details.jsx
+    │   │   ├── ManageAccount.js
+    │   │   ├── ManagePet.js
+    │   │   ├── Orders.js
+    │   │   ├── Services.js
+    │   │   ├── Subscription.js
+    │   │   └── VaccinationDetails.jsx
+    │   ├── Auth
+    │   │   ├── AuthForm.module.scss
+    │   │   └── FloattingLabel.scss
+    │   ├── Common
+    │   │   ├── Sidebar.js
+    │   │   └── TopNav.js
+    │   ├── Footer
+    │   │   ├── Footer.css
+    │   │   └── Footer.js
+    │   ├── Header
+    │   │   ├── Header.css
+    │   │   ├── Header.js
+    │   │   └── assets
+    │   │       └── logo.png   (website logo)
+    │   ├── IntroAnimation
+    │   │   ├── IntroAnimation.js
+    │   │   ├── IntroAnimation.scss
+    │   │   └── assets
+    │   │       ├── mascot.svg
+    │   │       └── paw-print.svg
+    │   ├── ReviewOrder
+    │   │   ├── CallToAction.css
+    │   │   ├── CallToAction.jsx
+    │   │   ├── Footer.css
+    │   │   ├── Footer.jsx
+    │   │   ├── Header.css
+    │   │   ├── Header.jsx
+    │   │   ├── OrderReview.css
+    │   │   ├── OrderReview.jsx
+    │   │   ├── OrderSummary.css
+    │   │   ├── OrderSummary.jsx
+    │   │   ├── ShippingBilling.css
+    │   │   └── ShippingBilling.jsx
+    │   └── ServiceComponents
+    │       ├── FormSection
+    │       │   ├── FormSection.js
+    │       │   └── FormSection.css
+    │       ├── HeroSection
+    │       │   ├── HeroSection.js
+    │       │   └── HeroSection.css
+    │       ├── ServicesSection
+    │       │   ├── ServicesSection.js
+    │       │   └── ServicesSection.css
+    │       └── SFooter
+    │           ├── SFooter.js
+    │           └── SFooter.css
+    ├── context
+    │   └── AuthContext.js
+    ├── pages
+    │   ├── AboutPage.js
+    │   ├── AboutPawfectCare.js
+    │   ├── CareGuides.js
+    │   ├── ContactPage.js
+    │   ├── CustomerStories.js
+    │   ├── CustomerStories.scss
+    │   ├── FAQs.js
+    │   ├── Login.jsx
+    │   ├── MeetTheTeam.js
+    │   ├── MyAccountPage.css
+    │   ├── MyAccountPage.js
+    │   ├── PetCareBlog.js
+    │   ├── ReviewOrder.jsx
+    │   ├── ReviewOrder.module.css
+    │   ├── ServicePage.js
+    │   ├── Signup.jsx
+    │   └── ContactPage
+    │       ├── ContactPage.js
+    │       └── ContactPage.module.scss
+    │   └── HomePage
+    │       ├── BackToTop.css
+    │       ├── BackToTop.js
+    │       ├── HomePage.css
+    │       └── HomePage.js
+    │   └── ShopPage
+    │       ├── productImages.js
+    │       ├── ShopPage.jsx
+    │       ├── ShopPage.module.scss
+    │       ├── Assets         (ignored: contains 60 img files)
+    │       └── Components
+    │           ├── CategoryFilter.jsx
+    │           ├── PriceFilter.jsx
+    │           └── ProductCard.jsx
+    │   └── Solutions
+    │       ├── AdoptionAssistance.js
+    │       ├── AdoptionAssistance.scss
+    │       ├── BoardingDaycare.js
+    │       ├── BoardingDaycare.scss
+    │       ├── GroomingCare.js
+    │       ├── GroomingCare.scss
+    │       ├── PetHealthManagement.js
+    │       ├── PetHealthManagement.scss
+    │       ├── VaccinationPrograms.js
+    │       └── VaccinationPrograms.scss
+    │   └── TnC
+    │       ├── TermsAndConditions.js
+    │       └── TermsAndConditions.css
+    └── AdminPanel                     <-- New AdminPanel folder added under src
+        ├── AdminPanel.js
+        ├── components
+        │   ├── AdminIntroAnimation.js
+        │   ├── Sidebar.js
+        │   └── UserManagement.js
+        ├── pages
+        │   ├── Adoption.js
+        │   ├── Consultation.js
+        │   ├── Dashboard.js
+        │   ├── Daycare.js
+        │   ├── Grooming.js
+        │   ├── Orders.js
+        │   ├── Services.js
+        │   ├── Users.js
+        │   └── Vaccination.js
+        └── styles
+            └── AdminPanel.module.css

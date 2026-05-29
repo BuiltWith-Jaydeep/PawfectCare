@@ -68,3 +68,26 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+PawfectCare mongodb atlas
+https://account.mongodb.com/account/login
+iske liye google account login krke krna pdega 
+or stripe backend ke liye powershell me jake ye likhne ka 
+stripe listen --forward-to http://localhost:5000/api/webhook
+
+user@example.com
+REDACTED_PASSWORD
+admin password REDACTED_ADMIN_PASSWORD
+
+
+hotelsuite ke liye 
+user2@example.com 
+REDACTED_PASSWORD
+admin ka password
+username -siteadmin
+pass - HotelSuite

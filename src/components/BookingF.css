@@ -1,0 +1,213 @@
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 107, 0.2),
+    rgba(74, 175, 80, 0.2)
+  ); /* Soft gradient */
+  background-size: 200% 200%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px); 
+  animation: gradientShift 15s ease infinite; /* Smooth, slow animation */
+}
+
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+
+.modal-content {
+  background: rgba(255, 255, 255, 0.15); 
+  padding: 40px;
+  border-radius: 20px;
+  width: 700px; 
+  max-height: 85vh;
+  overflow-y: visible;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); 
+  backdrop-filter: blur(12px); 
+  border: 1px solid rgba(255, 255, 255, 0.3); 
+  position: relative;
+}
+
+/* Form heading */
+.modal-content h2 {
+  margin-bottom: 25px;
+  text-align: center;
+  color: #fff; 
+  font-family: "Arial", sans-serif;
+  font-size: 1.8rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+}
+
+/* Form group styling */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #fff; 
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.5); 
+  border-radius: 8px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.9); 
+  color: #333; 
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.5); 
+  outline: none;
+}
+
+/* DatePicker */
+.form-group .react-datepicker-wrapper {
+  width: 100%;
+}
+
+.form-group .react-datepicker__input-container input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.5); 
+  border-radius: 8px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group .react-datepicker__input-container input:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+  outline: none;
+}
+
+.form-group .react-datepicker {
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.form-group .react-datepicker__header {
+  background: #4caf50;
+  color: #fff;
+  border-bottom: none;
+}
+
+.form-group .react-datepicker__current-month,
+.form-group .react-datepicker__day-name,
+.form-group .react-datepicker__day {
+  color: #333;
+}
+
+.form-group .react-datepicker__day--selected,
+.form-group .react-datepicker__day:hover {
+  background: #4caf50;
+  color: #fff;
+  border-radius: 50%;
+}
+
+.form-group .react-datepicker__day--disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.form-group.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.form-group.checkbox input {
+  width: auto;
+  margin-right: 10px;
+}
+
+.error {
+  color: #ff6b6b; 
+  font-size: 0.85rem;
+  margin-top: 5px;
+  display: block;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.submit-button,
+.cancel-button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submit-button {
+  background: #4caf50; 
+  color: #fff;
+}
+
+.submit-button:hover {
+  background: #45a049;
+  transform: translateY(-2px); 
+}
+
+.cancel-button {
+  background: #ff6b6b; /* Red */
+  color: #fff;
+}
+
+.cancel-button:hover {
+  background: #ff4a3d;
+  transform: translateY(-2px);
+}
+
+.notification {
+  position: fixed; 
+  top: 20px; 
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(76, 175, 80, 0.9); 
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1010; 
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}

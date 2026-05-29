@@ -1,0 +1,28 @@
+@media (max-width: 768px) {
+  .hamburger {
+    display: block !important; 
+  }
+  .service-card {
+    min-height: 180px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .service-card {
+    min-height: 220px;
+  }
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #14B8A6 !important;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+}

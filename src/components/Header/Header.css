@@ -24,8 +24,8 @@
   gap: 0.75rem;
 }
 
-.logo {
-  width: 50px;
+.header-logo {
+  width: 90px;
   height: 50px;
   transition: transform 0.3s ease;
 }
@@ -46,7 +46,9 @@
   position: relative;
   padding: 0.5rem 0;
   color: #636e72;
+  font-size: 18px;
   font-weight: 500;
+  text-decoration: none;
   transition: color 0.3s ease;
 }
 
@@ -60,7 +62,7 @@
   transform-origin: left;
 }
 
-/* New Auth Buttons Section */
+
 .auth-buttons {
   display: flex;
   gap: 1rem;
@@ -76,7 +78,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Advanced gradient backgrounds with subtle shadow effects */
+/* grd bg with shadow */
 .login-button {
   background: linear-gradient(45deg, #ff6b6b, #ff8a80);
   color: white;
@@ -94,8 +96,54 @@
   transform: scale(1.1);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
+/* My Account Button */
+.my-account-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(45deg, #74b9ff, #a29bfe);
+  color: white;
+  box-shadow: 0 4px 10px rgba(116, 185, 255, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-/* Responsive adjustments */
+.my-account-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Log Out Button */
+.logout-button {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  background: #ff6b6b;
+  color: white;
+  box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.5rem;
+}
+
+.logout-button:hover {
+  transform: translateX(-50%) scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* My Account Container */
+.my-account-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* animations */
 @media (max-width: 768px) {
   .header-content {
     flex-direction: column;

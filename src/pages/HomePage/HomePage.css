@@ -130,7 +130,7 @@
   height: 12px;
 }
 
-/* Left Align Modifiers */
+/* Left  */
 .left-align {
   max-width: 1200px;
   margin: 0 auto;
@@ -161,22 +161,6 @@
   .slide-indicators.left-align {
     left: 1rem;
   }
-}
-
-/* Presale Chat */
-.presale-chat {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: #ff6b6b;
-  color: white;
-  padding: 1rem 1.5rem;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  cursor: pointer;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 /* Shop Section */
@@ -235,7 +219,7 @@
 }
 
 .product-card {
-  background: white;
+  background: rgba(0, 0, 0, 0.229);
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -247,9 +231,10 @@
   box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
+/* Product Image  */
 .product-image {
   position: relative;
-  height: 250px;
+  height: 250px; 
   overflow: hidden;
 }
 
@@ -264,50 +249,107 @@
   transform: scale(1.1);
 }
 
-.product-overlay {
+/* Product Actions  */
+.product-actions {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  align-items: center;
-  justify-content: center;
+  gap: 1rem;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
-.product-card:hover .product-overlay {
+.product-card:hover .product-actions {
   opacity: 1;
 }
 
+/* Quick View & Add To Cart Buttons */
 .quick-view,
 .add-to-cart {
-  background: #ff6b6b;
-  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
   border: none;
   padding: 0.8rem 1.5rem;
   border-radius: 25px;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
+  transition: background 0.3s ease;
 }
 
-.product-info {
-  padding: 1.5rem;
+.quick-view:hover,
+.add-to-cart:hover {
+  background: rgba(0, 0, 0, 0.9);
 }
 
-.product-info h3 {
-  font-size: 1.3rem;
-  color: #2d3436;
+/* Sale Badge */
+.sale-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ff6b6b;
+  color: #fff;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* Product Details Section */
+.product-details {
+  padding: 1rem;
+  background: #fff;
+  color: #333;
+}
+
+.product-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 0.5rem;
 }
 
-.product-info p {
+.product-meta .category {
+  font-size: 0.9rem;
+  background: #ff6b6b;
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+}
+
+.rating {
+  color: #ffc107;
+  font-size: 0.9rem;
+}
+
+/* Product Title */
+.product-details h3 {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  font-weight: 600;
+  color: #2d3436;
+}
+
+/* Price Styling */
+.price {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.current-price {
   font-size: 1.1rem;
-  color: #636e72;
-  font-weight: 500;
+  font-weight: bold;
+  color: #ff6b6b;
 }
 
 .view-more-btn {
@@ -317,7 +359,7 @@
   margin: 0 auto;
   padding: 1rem 2rem;
   background: #74b9ff;
-  color: white;
+  color: rgb(0, 0, 0);
   border: none;
   border-radius: 30px;
   font-size: 1.1rem;
@@ -334,7 +376,7 @@
   transform: translateX(5px);
 }
 
-/* Responsive Design for Shop Section */
+/* shop thing animation */
 @media (max-width: 768px) {
   .shop-section {
     padding: 2rem 1rem;
@@ -353,4 +395,23 @@
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
   }
+}
+
+
+.view-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-all-btn:hover {
+  background-color: #0056b3;
 }

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { FaCommentDots, FaPaw, FaCircle, FaArrowRight, FaEye, FaShoppingCart, FaStar } from 'react-icons/fa';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
@@ -20,7 +21,7 @@ const slides = [
   },
   {
     title: 'Pet Boarding',
-    subtitle: ['Safe & Comfortable Boarding', 'Trusted Care While You\'re Away'],
+    subtitle: ['Safe & Comfortable Boarding', "Trusted Care While You're Away"],
     bg: 'hero-bg-3.jpg',
     cta: 'SCHEDULE STAY'
   }
@@ -35,7 +36,6 @@ const products = [
     category: 'Food',
     rating: 4,
     sale: true,
-    oldPrice: '$39.99'
   },
   {
     id: 2,
@@ -125,18 +125,32 @@ const slideVariants = {
 };
 
 const HomePage = () => {
+  // Set up state for the active slide and login status
   const [[activeSlide, direction], setActiveSlide] = useState([0, 1]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const paginate = (newDirection) => {
-    setActiveSlide([(activeSlide + newDirection + slides.length) % slides.length, newDirection]);
-  };
+  // Check if the user is logged in 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  // Wrap pagination with useCallback for stability
+  const paginate = useCallback((newDirection) => {
+    setActiveSlide(([prevSlide, _]) => [
+      (prevSlide + newDirection + slides.length) % slides.length,
+      newDirection
+    ]);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => paginate(1), 5000);
     return () => clearInterval(timer);
-  }, [activeSlide]);
+  }, [paginate]);
 
-  const parseWords = (text) => 
+  const parseWords = (text) =>
     text.split(' ').map((word, i) => (
       <motion.span 
         key={i} 
@@ -150,94 +164,89 @@ const HomePage = () => {
 
   return (
     <div className="homepage">
-      <Header />
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
 
       <div className="carousel-container">
-  <AnimatePresence initial={false} custom={direction}>
-    {slides.map((slide, index) => (
-      activeSlide === index && (
-        <motion.section
-          key={index}
-          className="hero-slide"
-          style={{ backgroundImage: `url(/assets/images/${slide.bg})` }}
-          variants={slideVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ duration: 1.2, ease: 'easeInOut' }}
-          custom={direction}
-        >
-          <div className="slide-overlay">
-            <motion.div 
-              className="slide-content left-align"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
-            >
-              {/* Animated Title */}
-              <motion.div
-                className="title-container"
-                initial="hidden"
-                animate="visible"
+        <AnimatePresence initial={false} custom={direction}>
+          {slides.map((slide, index) =>
+            activeSlide === index && (
+              <motion.section
+                key={index}
+                className="hero-slide"
+                style={{ backgroundImage: `url(/assets/images/${slide.bg})` }}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 1.2, ease: 'easeInOut' }}
+                custom={direction}
               >
-                <FaPaw className="paw-icon" />
-                <motion.h1>
-                  {parseWords(slide.title)}
-                </motion.h1>
-              </motion.div>
-
-              {/* Animated Subtitle */}
-              <div className="subtitle-container">
-                {slide.subtitle.map((line, lineIndex) => (
-                  <motion.p
-                    key={lineIndex}
-                    initial="hidden"
-                    animate="visible"
-                    custom={lineIndex + 1}
-                    variants={wordVariants}
+                <div className="slide-overlay">
+                  <motion.div 
+                    className="slide-content left-align"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8 }}
                   >
-                    {parseWords(line)}
-                  </motion.p>
-                ))}
-              </div>
+                    <motion.div
+                      className="title-container"
+                      initial="hidden"
+                      animate="visible"
+                    >
+                      <FaPaw className="paw-icon" />
+                      <motion.h1>{parseWords(slide.title)}</motion.h1>
+                    </motion.div>
 
-              {/* CTA Button */}
-              <motion.button
-                className="cta-button"
-                whileHover={{ scale: 1.05, boxShadow: '0 10px 20px rgba(0,0,0,0.2)' }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ 
-                  opacity: 1,
-                  y: 0,
-                  transition: { delay: 1.5 } 
-                }}
-              >
-                {slide.cta}
-              </motion.button>
-            </motion.div>
-          </div>
-        </motion.section>
-      )
-    ))}
-  </AnimatePresence>
+                    <div className="subtitle-container">
+                      {slide.subtitle.map((line, lineIndex) => (
+                        <motion.p
+                          key={lineIndex}
+                          initial="hidden"
+                          animate="visible"
+                          custom={lineIndex + 1}
+                          variants={wordVariants}
+                        >
+                          {parseWords(line)}
+                        </motion.p>
+                      ))}
+                    </div>
 
-  {/* Slide Indicators */}
-  <div className="slide-indicators left-align">
-    {slides.map((_, index) => (
-      <button
-        key={index}
-        className={`indicator ${index === activeSlide ? 'active' : ''}`}
-        onClick={() => setActiveSlide([index, index > activeSlide ? 1 : -1])}
-      >
-        <FaCircle />
-      </button>
-    ))}
-  </div>
-</div>
+                    {/* Wrap the CTA button with Link to navigate to /service */}
+                    <Link to="/service" style={{ textDecoration: 'none' }}>
+                      <motion.button
+                        className="cta-button"
+                        whileHover={{ scale: 1.05, boxShadow: '0 10px 20px rgba(0,0,0,0.2)' }}
+                        whileTap={{ scale: 0.95 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ 
+                          opacity: 1,
+                          y: 0,
+                          transition: { delay: 1.5 } 
+                        }}
+                      >
+                        {slide.cta}
+                      </motion.button>
+                    </Link>
+                  </motion.div>
+                </div>
+              </motion.section>
+            )
+          )}
+        </AnimatePresence>
 
+        <div className="slide-indicators left-align">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              className={`indicator ${index === activeSlide ? 'active' : ''}`}
+              onClick={() => setActiveSlide([index, index > activeSlide ? 1 : -1])}
+            >
+              <FaCircle />
+            </button>
+          ))}
+        </div>
+      </div>
 
-      {/* Shop Section */}
       <motion.section 
         className="shop-section"
         initial={{ opacity: 0 }}
@@ -248,13 +257,15 @@ const HomePage = () => {
         <div className="shop-container">
           <div className="shop-header">
             <h2>Popular Pet Products</h2>
-            <motion.button 
-              className="view-all-btn"
-              whileHover={{ x: 5 }}
-              transition={{ type: 'spring', stiffness: 300 }}
-            >
-              View All Products <FaArrowRight />
-            </motion.button>
+            <Link to="/shop" style={{ textDecoration: 'none' }}>
+              <motion.button 
+                className="view-all-btn"
+                whileHover={{ x: 5 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+              >
+                View All Products <FaArrowRight />
+              </motion.button>
+            </Link>
           </div>
 
           <div className="products-grid">
@@ -269,20 +280,24 @@ const HomePage = () => {
                 <div className="product-image">
                   <img src={product.image} alt={product.name} />
                   <div className="product-actions">
-                    <motion.button 
-                      className="quick-view"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <FaEye />
-                    </motion.button>
-                    <motion.button 
-                      className="add-to-cart"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <FaShoppingCart />
-                    </motion.button>
+                    <Link to="/shop" style={{ textDecoration: 'none' }}>
+                      <motion.button 
+                        className="quick-view"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <FaEye />
+                      </motion.button>
+                    </Link>
+                    <Link to="/shop" style={{ textDecoration: 'none' }}>
+                      <motion.button 
+                        className="add-to-cart"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <FaShoppingCart />
+                      </motion.button>
+                    </Link>
                   </div>
                   {product.sale && <span className="sale-badge">Sale!</span>}
                 </div>
@@ -307,12 +322,6 @@ const HomePage = () => {
           </div>
         </div>
       </motion.section>
-
-      {/* Presale Chat Button */}
-      <div className="presale-chat">
-        <FaCommentDots />
-        <span>Presale Chat</span>
-      </div>
 
       <Footer />
     </div>

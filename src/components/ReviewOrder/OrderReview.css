@@ -1,0 +1,42 @@
+.orderReview {
+    margin: 20px 0;
+  }
+  
+  .orderReview h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .summaryPanel {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  .summaryPanel ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .summaryPanel li {
+    margin-bottom: 10px;
+  }
+  
+  .terms {
+    margin-top: 20px;
+  }
+  
+  .terms label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .terms a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .terms a:hover {
+    text-decoration: underline;
+  }

@@ -1,9 +1,6 @@
-// src/assets/styles/App.scss
-
 @import './variables';
 @import './animations';
 
-/* Global Reset and Typography */
 * {
   margin: 0;
   padding: 0;
@@ -11,32 +8,32 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif; // Ensure you add the Google Fonts link in public/index.html
-  background: $primary-gradient;
+  font-family: 'Poppins', sans-serif;
+  background: transparent;
   color: $text-color;
   line-height: 1.6;
 }
 
-/* Container for auth pages */
+/* auth box */
 .auth-page {
   display: flex;
-  flex-direction: column; // Allow stacking if needed.
-  justify-content: center;  // Center vertically.
-  align-items: center;      // Center horizontally.
-  min-height: 100vh;        // Ensure it always fills the viewport.
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
   padding: 1rem;
   background: $primary-gradient;
   overflow-x: hidden;
 }
 
-/* Glassmorphic Form Style */
+/* glass like theme */
 .glass-form {
   background: $glass-background;
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 2rem;
-  width: 90%;               // Responsive width.
-  max-width: 500px;         // Maximum width limit.
+  width: 90%;
+  max-width: 500px;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   position: relative;
   z-index: 1;
@@ -126,6 +123,43 @@ body {
   }
 }
 
+/* Hover area for admin access */
+.hover-area {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  opacity: 0;
+  cursor: default;
+}
+
+/* Admin popup */
+.admin-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: $glass-background;
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  z-index: 10;
+}
+
+.admin-popup input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  color: $text-color;
+  font-size: 1rem;
+  outline: none;
+}
+
 /* Responsive design */
 @media (min-width: 768px) {
   .glass-form {
@@ -138,4 +172,3 @@ body {
     max-width: 700px;
   }
 }
-

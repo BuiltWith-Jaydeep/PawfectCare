@@ -7,7 +7,10 @@ import '../assets/styles/App.scss';
 const Login = () => {
   return (
     <div className="auth-page">
+      {/* Particles background */}
       <ParticlesBackground />
+      
+      {/* Animated login form */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

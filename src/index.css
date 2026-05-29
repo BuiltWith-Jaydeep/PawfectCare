@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins',Arial, sans-serif;
 }
 
 #root {
@@ -8,3 +8,4 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
