@@ -26,7 +26,6 @@ const vaccinationRoutes = require('./routes/vaccination');
 const subscriptionRoutes = require('./routes/subscription');
 const webhookRoutes = require('./routes/webhook');
 const authMiddleware = require('./middleware/auth');
-const Order = require('./models/Order');
 
 const app = express();
 
@@ -119,48 +118,7 @@ app.post('/api/payment/create-checkout-session', authMiddleware, async (req, res
   }
 });
 
-// Confirm payment and save order for e-commerce 
-app.get('/api/payment/confirm', async (req, res) => {
-  const { session_id } = req.query;
-
-  if (!session_id) {
-    return res.status(400).json({ error: 'No session_id provided' });
-  }
-
-  try {
-    const session = await stripe.checkout.sessions.retrieve(session_id, {
-      expand: ['line_items'],
-    });
-
-    if (session.payment_status === 'paid') {
-      const cart = JSON.parse(session.metadata.cart || '[]');
-      const order = new Order({
-        userId: session.metadata.userId,
-        orderId: session.id,
-        paymentIntentId: session.payment_intent,
-        amount: session.amount_total / 100,
-        currency: session.currency,
-        status: 'completed',
-        products: session.line_items.data.map((item, index) => ({
-          productId: item.price.product,
-          quantity: item.quantity,
-          name: cart[index]?.name || item.description,
-          price: cart[index]?.discountPrice || (item.amount_total / item.quantity / 100),
-        })),
-        createdAt: new Date(),
-      });
-
-      await order.save();
-      console.log('Order saved to database:', order);
-      res.json({ message: 'Payment confirmed and order stored!' });
-    } else {
-      res.status(400).json({ error: 'Payment not completed yet' });
-    }
-  } catch (error) {
-    console.error('Error confirming payment:', error);
-    res.status(500).json({ error: 'Failed to confirm payment' });
-  }
-});
+// NOTE: orders are written by the Stripe webhook (routes/webhook.js), never by a browser callback (RULES R6).
 
 // New route to fetch billing history for subscriptions
 app.get('/api/payments/user/:userId', authMiddleware, async (req, res) => {

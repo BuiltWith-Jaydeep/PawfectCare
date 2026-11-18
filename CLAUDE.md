@@ -43,8 +43,9 @@ Fixed and verified:
 
 - ✅ **D5** — all HTTP goes through `src/api/client.js` (`REACT_APP_API_URL`, 401 interceptor); CORS and Stripe return URLs read `CLIENT_URL`; `/api/subscription` path fixed. Verified: build exit 0, CORS header echoes `CLIENT_URL`.
 
+- ✅ **D6** — orders are written by the Stripe webhook (`routes/webhook.js`); `/api/payment/confirm` removed. Verified with a signed event: bad sig 400, good 200, redelivery = 1 order. **Real Stripe delivery + `STRIPE_WEBHOOK_SECRET` still unverified** (CLI key expired).
+
 Still broken:
-- 🟠 **D6** — orders written by a browser callback instead of the Stripe webhook
 - 🟡 **D7/D8/D9** — hardcoded products and cart bugs; fabricated dashboard numbers; dead code
 
 Phase order, traps and deploy steps: **[docs/HANDOVER.md](docs/HANDOVER.md)**.

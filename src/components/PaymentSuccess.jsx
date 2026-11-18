@@ -2,21 +2,12 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './PaymentSuccess.css';
-import client from '../api/client';
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Extract session_id from URL
-    const sessionId = new URLSearchParams(window.location.search).get('session_id');
-
-    if (sessionId) {
-      // Call the backend to confirm payment and save order
-      client.get(`/api/payment/confirm?session_id=${sessionId}`)
-        .then(res => console.log('Order save response:', res.data))
-        .catch(err => console.error('Error saving order:', err));
-    }
+    // The order is recorded by the Stripe webhook on the server, not from this page.
 
     // Redirect to home after 5 seconds
     const timer = setTimeout(() => {

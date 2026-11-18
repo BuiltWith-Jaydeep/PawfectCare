@@ -13,7 +13,7 @@
 | `/shop` | `pages/ShopPage/ShopPage.jsx` | 🔓 | ❌ **60 hardcoded objects** | C5, C6, C10 |
 | `/checkout` | `pages/ReviewOrder.jsx` | 🔓 ⚠️ | router `state` + `GET /users/me` | ❌ empty on refresh (C6); should be 🔑 |
 | `/services`, `/service` | `pages/ServicePage.js` | 🔓 | static + `POST /subscription/...` | Two paths, same component |
-| `/payment-success` | `components/PaymentSuccess.jsx` | 🔓 | `GET /payment/confirm` | ❌ writes the order (C4) |
+| `/payment-success` | `components/PaymentSuccess.jsx` | 🔓 | — | ✅ display only; webhook writes the order (D6) |
 | `/success` | `components/Success.jsx` | 🔓 | — | Subscription landing |
 | `/contact` | `pages/ContactPage/ContactPage.js` | 🔓 | static | ⚠️ form doesn't submit anywhere |
 | `/terms-and-conditions` | `pages/TnC/TermsAndConditions.jsx` | 🔓 | static | |

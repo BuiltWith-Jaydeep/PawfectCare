@@ -32,13 +32,13 @@ Written 18 Nov 2026. Read this first, then [RULES.md](RULES.md) and [AUDIT.md](A
 | **D2** | Admin auth + authorization | 401 / 403 / 200 verified live on all 18 endpoints |
 | **D4** | Database wired and verified | real data returned through the API |
 | **D3** | Ownership checks restored in 5 controllers | A→B 403, A→A 200, admin→B 200 on all 5 endpoints |
+| **D6** | Orders written by the webhook (`saveOrder`), browser route deleted | signed-event test: bad sig 400, good 200, redelivery → 1 order (₹246, cleaned up). ⚠️ not tested with a *Stripe-originated* event |
 | **D5** | One axios client (`src/api/client.js`); CORS + Stripe return URLs from `CLIENT_URL` | build exit 0; 0 hardcoded hosts in `src/` except the env-driven fallback; CORS preflight echoes `CLIENT_URL`; `/api/subscription/user/:id` → 200 for owner |
 
 ### Not started
 
 | ID | What | Why it matters |
 |---|---|---|
-| **D6** 🟠 | Orders written by a browser callback, not the webhook | Paid orders lost if the browser closes |
 | **D7** 🟡 | 60 products hardcoded in the component; no `Product` model | Cart bugs: duplicates, quantity ignored, lost on refresh |
 | **D8** 🟡 | Admin dashboard chart is `[5,20,7,8,6,9,5]` | Fabricated numbers |
 | **D9** 🟡 | `helmet` imported but unused, dead code | Hygiene |
@@ -135,7 +135,7 @@ but `server.js:74` mounts `/api/subscription` (singular).
 **Also server-side:** `backend/server.js:39` hardcodes `origin: 'http://localhost:3000'`.
 It must read `process.env.CLIENT_URL` or the deployed frontend is blocked by CORS.
 
-### Phase 3 — D6, money must be server-authoritative 🟠
+### Phase 3 — D6, money must be server-authoritative ✅ *code done; real-Stripe test outstanding*
 
 `src/components/PaymentSuccess.jsx:15` calls `/api/payment/confirm` **from the browser**
 to save the order. Close the tab and a paid order is never recorded.
@@ -251,5 +251,5 @@ git push origin main     # D3 is committed but NOT yet pushed
 grep -rno "localhost:5000" src --include=*.js --include=*.jsx | wc -l   # expect 38
 ```
 
-**Phases 1–2 (D3, D5) are done.** Start at **Phase 3 (D6)** — the Stripe webhook.
+**Phases 1–3 (D3, D5, D6) are done in code.** Open: a real Stripe-originated webhook test (CLI key expired — needs `stripe login`, or register the endpoint in the Dashboard at deploy and use *Send test webhook*). Next: **Phase 4 (Render)**.
 Verify with curl before reporting anything done (RULES R10).

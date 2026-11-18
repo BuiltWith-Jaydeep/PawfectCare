@@ -103,7 +103,6 @@ Base `/api`. Auth: `Authorization: Bearer <JWT>`.
 | GET | `/orders` | 👑 | ❌ wide open |
 | PUT | `/orders/update/:id` | 👑 | ❌ wide open |
 | POST | `/payment/create-checkout-session` | 🔑 | ✅ |
-| GET | `/payment/confirm` | 🔓 | ⚠️ browser-triggered order write (C4) |
 | GET | `/payments/user/:userId` | 🔑 owner | ⚠️ broken — C2 |
 | POST | `/subscription/create-checkout-session` | 🔑 | ✅ |
 | GET | `/subscription/user/:userId` | 🔑 owner | ✅ **correct — the template for S2** |

@@ -158,7 +158,9 @@ So `stripeCustomerId` is always `undefined`. There is also no `stripeCustomerId`
 `server.js:66` mounts `/api/subscription` (**singular**). Guaranteed 404 — and the component
 treats 404 as "no subscription", so a paying customer silently sees *no plan*.
 
-### C4. Paid orders are lost if the browser closes
+### C4. Paid orders are lost if the browser closes — ✅ FIXED (D6)
+> `/api/payment/confirm` removed; `routes/webhook.js` `saveOrder()` writes the order on `checkout.session.completed` (idempotent upsert on `orderId`; returns 500 on failure so Stripe retries). The text below is the original finding.
+
 Order rows are written by `GET /api/payment/confirm`, which is called **from the browser** in
 `PaymentSuccess.jsx:15`. If the customer closes the tab on Stripe's redirect, money is taken and
 **no order is ever recorded**. The endpoint is also unauthenticated and idempotency rests only on

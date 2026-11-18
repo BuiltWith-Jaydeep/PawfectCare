@@ -139,7 +139,7 @@ server.js:68  builds Stripe line_items
 ```
 Stripe → redirects browser → /payment-success?session_id=...
    ▼
-PaymentSuccess.jsx:15   fetch GET /api/payment/confirm?session_id=...   🔓 unauthenticated
+PaymentSuccess.jsx      (display only — the order is written by the webhook, D6)
    ▼
 server.js:110
    │ stripe.checkout.sessions.retrieve(session_id, {expand:['line_items']})

@@ -72,8 +72,8 @@ backend/
 ```
 
 **Routing → controller → model** is followed consistently, with two exceptions worth knowing:
-`server.js` defines three payment routes **inline** (`/api/payment/create-checkout-session`,
-`/api/payment/confirm`, `/api/payments/user/:userId`) instead of in a router, and `routes/user.js`
+`server.js` defines two payment routes **inline** (`/api/payment/create-checkout-session`,
+`/api/payments/user/:userId`) instead of in a router, and `routes/user.js`
 and `routes/subscription.js` contain inline handlers rather than delegating.
 **→ Target:** move these into `routes/payment.js` + `controllers/paymentController.js`.
 
@@ -130,9 +130,9 @@ Subscriptions (correct):
   client → POST /subscription/create-checkout-session → Stripe → redirect
   Stripe → POST /api/webhook (signed) → saveSubscription() → Mongo   ✅ server-authoritative
 
-One-time orders (fragile):
+One-time orders:
   client → POST /payment/create-checkout-session → Stripe → redirect
-  browser → GET /api/payment/confirm → writes Order                  ❌ client-authoritative
+  Stripe → POST /api/webhook (signed) → saveOrder() → Mongo          ✅ server-authoritative (D6)
 ```
 
 The subscription path is architecturally correct: Stripe is the source of truth and the webhook
