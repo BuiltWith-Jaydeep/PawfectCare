@@ -61,7 +61,7 @@ you ask for real data.
 | Express boot | ✅ Starts :5000 | — | — |
 | Database | ❌ Cluster deleted | **Needs your Atlas URI** | [SETUP.md](SETUP.md) |
 | Admin auth | ❌ None | Needs `role` field first | [TRD.md](TRD.md) D2 |
-| Data isolation | ❌ Disabled ×5 | — | [TRD.md](TRD.md) D3 |
+| Data isolation | ✅ Enforced ×5 (D3 done) | — | [TRD.md](TRD.md) D3 |
 | Secrets | ⚠️ In tracked README + history | — | [TRD.md](TRD.md) D1 |
 | Deployability | ❌ 37 hardcoded localhost URLs | — | [TRD.md](TRD.md) D5 |
 | Products | ⚠️ Hardcoded, no model | — | [TRD.md](TRD.md) D7 |

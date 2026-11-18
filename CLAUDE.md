@@ -39,9 +39,9 @@ Fixed and verified:
 - ✅ **D2** — `role` field, `requireAdmin`, `AdminRoute`, real admin login.
   All 18 admin endpoints verified: 401 without a token, 403 for a non-admin, 200 for admin
 
+- ✅ **D3** — ownership enforced in all 5 service controllers (403 for another user's id; admin allowed). Verified live.
+
 Still broken:
-- 🔴 **D3 — ownership checks commented out in all 5 service controllers** → any logged-in
-  user can read any other user's records. **Worst open bug; fix first.**
 - 🟠 **D5 — 38 hardcoded `localhost:5000` URLs in 22 files** + CORS hardcoded in
   `server.js:39`. **Blocks deploy.**
 - 🟠 **D6** — orders written by a browser callback instead of the Stripe webhook

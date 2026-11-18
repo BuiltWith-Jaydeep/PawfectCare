@@ -52,13 +52,13 @@ exports.createAdoption = async (req, res) => {
 exports.getUserAdoptions = async (req, res) => {
   try {
     const { userId } = req.params;
+    // Owner or admin only. Authority comes from the verified token (req.user), never the URL.
+    const isAdmin = req.user.role === 'admin';
+    if (!isAdmin && req.user.id !== userId) {
+      return res.status(403).json({ error: 'Unauthorized access' });
+    }
 
-    // TEMPORARY: Commented out
-    // if (req.user.id !== userId) {
-    //   return res.status(403).json({ error: 'Unauthorized access' });
-    // }
-
-    const adoptionRequests = await Adoption.find({ userId }).sort({ createdAt: -1 });
+    const adoptionRequests = await Adoption.find({ userId: isAdmin ? userId : req.user._id }).sort({ createdAt: -1 });
     res.status(200).json(adoptionRequests || []);
   } catch (error) {
     console.error('Error fetching adoption requests:', error);

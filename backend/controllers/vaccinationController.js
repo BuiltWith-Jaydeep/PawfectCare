@@ -47,11 +47,13 @@ exports.createVaccination = async (req, res) => {
 exports.getUserVaccinations = async (req, res) => {
   try {
     const { userId } = req.params;
-    // TEMPORARY: Auth check disabled to allow data fetching
-    // if (req.user.id !== userId) {
-    //   return res.status(403).json({ error: 'Unauthorized access' });
-    // }
-    const vaccinations = await Vaccination.find({ userId }).sort({ createdAt: -1 });
+    // Owner or admin only. Authority comes from the verified token (req.user), never the URL.
+    const isAdmin = req.user.role === 'admin';
+    if (!isAdmin && req.user.id !== userId) {
+      return res.status(403).json({ error: 'Unauthorized access' });
+    }
+
+    const vaccinations = await Vaccination.find({ userId: isAdmin ? userId : req.user._id }).sort({ createdAt: -1 });
     res.status(200).json(vaccinations || []);
   } catch (error) {
     console.error('Error fetching vaccinations:', error);

@@ -287,5 +287,5 @@ password, hotelsuite password, Atlas DB password and both email addresses. Force
 
 ### Still open after D2
 - `requireAdmin` guards the admin *list/update/delete* routes. The per-user ownership
-  checks commented out in the 5 service controllers are **D3** and still disabled, so a
-  logged-in user can still read another user's records via `/user/:userId`.
+  checks in the 5 service controllers (**D3**) are now restored: a non-admin requesting
+  another user's `/user/:userId` gets 403, and the query uses the token's id. *(Done)*

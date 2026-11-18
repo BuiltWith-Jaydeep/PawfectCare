@@ -202,7 +202,7 @@ None exists today. Minimum bar before calling D1–D9 done:
 |---|---|
 | D1 Purge secrets + drop node_modules | **Done** — verified; GitHub GC still pending |
 | D2 role + requireAdmin + AdminRoute + admin login | **Done** — verified live |
-| D3 Re-enable 5 ownership checks | **Next** |
+| D3 Re-enable 5 ownership checks | **Done** — verified live (403 / 200 / admin 200) |
 | D4 Wire + verify database | **Done** (Step 1) |
 | D5-D9 | Not started |
 

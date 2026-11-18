@@ -31,12 +31,12 @@ Written 18 Nov 2026. Read this first, then [RULES.md](RULES.md) and [AUDIT.md](A
 | **D1** | Secrets purged from git history + `node_modules` dropped | `git filter-repo`, 0 hits for 6 patterns, force-pushed |
 | **D2** | Admin auth + authorization | 401 / 403 / 200 verified live on all 18 endpoints |
 | **D4** | Database wired and verified | real data returned through the API |
+| **D3** | Ownership checks restored in 5 controllers | A→B 403, A→A 200, admin→B 200 on all 5 endpoints |
 
 ### Not started
 
 | ID | What | Why it matters |
 |---|---|---|
-| **D3** 🔴 | 5 commented-out ownership checks | **Any logged-in user can read any other user's records.** Worst open bug |
 | **D5** 🟠 | 38 hardcoded `localhost:5000` URLs in 22 files | **Blocks deploy** — the live site would call the user's laptop |
 | **D6** 🟠 | Orders written by a browser callback, not the webhook | Paid orders lost if the browser closes |
 | **D7** 🟡 | 60 products hardcoded in the component; no `Product` model | Cart bugs: duplicates, quantity ignored, lost on refresh |
@@ -47,7 +47,7 @@ Written 18 Nov 2026. Read this first, then [RULES.md](RULES.md) and [AUDIT.md](A
 
 ## 2. Phases — do them in this order
 
-### Phase 1 — D3, the ownership checks 🔴 *start here*
+### Phase 1 — D3, the ownership checks ✅ *done — kept for reference*
 
 Five controllers accept a **client-supplied `userId` from the URL** and return that
 user's records without checking it belongs to the caller.
