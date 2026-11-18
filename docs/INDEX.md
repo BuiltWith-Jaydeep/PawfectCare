@@ -1,4 +1,7 @@
-# PawfectCare — Documentation Index
+# Documentation index
+
+> **Start here: [HANDOVER.md](HANDOVER.md)** — current status, what is done, what is
+> pending, the phase order to follow, and the traps that have already cost time.
 
 > **Single entry point.** Every other document links back here.
 > Last verified: 2026-11-17 · repo: `BuiltWith-Jaydeep/PawfectCare` · branch `main`

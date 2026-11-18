@@ -6,7 +6,8 @@ Instructions for Claude Code working in this repo. Read this first, every sessio
 
 | Doc | When |
 |---|---|
-| **[docs/RULES.md](docs/RULES.md)** | **Always.** 22 hard constraints; each exists because this code broke that way |
+| **[docs/HANDOVER.md](docs/HANDOVER.md)** | **First, every session.** Current status, phase order, known traps |
+| **[docs/RULES.md](docs/RULES.md)** | **Always.** 24 hard constraints; each exists because this code broke that way |
 | [docs/MEMORY.md](docs/MEMORY.md) | Before proposing anything — settled decisions and verified facts live here |
 | [docs/AUDIT.md](docs/AUDIT.md) | Before "fixing" anything — it's probably already catalogued |
 | [docs/INDEX.md](docs/INDEX.md) | Hub for PRD, TRD, architecture, data flow, pages, design |
@@ -30,16 +31,24 @@ Run it: `cd backend && npm start` (:5000) and `npm start` in root (:3000).
 
 ## Current state — read this before debugging anything
 
-The app **builds clean and boots clean**. It looks fine from the outside. The breakage is in the
-data and trust layers:
+Last updated 18 Nov 2026 (commit `2f916f9`). **Goal: get this site live.**
 
-- 🔴 **No database** — the Atlas cluster in `backend/.env` is deleted (verified: no DNS record). Blocks everything.
-- 🔴 **`/admin` has no login**, and 18 admin API endpoints have **no auth middleware at all**.
-- 🔴 **Ownership checks commented out in all 5 service controllers** → any user can read any other user's records.
-- 🟡 Admin dashboard numbers are hardcoded; 37 hardcoded `localhost` URLs block deploy; paid orders can be lost.
+Fixed and verified:
+- ✅ **Database works** — Atlas cluster running; data is in the `test` database
+- ✅ **D1** — secrets purged from git history, `node_modules` dropped
+- ✅ **D2** — `role` field, `requireAdmin`, `AdminRoute`, real admin login.
+  All 18 admin endpoints verified: 401 without a token, 403 for a non-admin, 200 for admin
 
-Full detail with file:line in [docs/AUDIT.md](docs/AUDIT.md). Fix order in
-[docs/TRD.md](docs/TRD.md) (D1–D9).
+Still broken:
+- 🔴 **D3 — ownership checks commented out in all 5 service controllers** → any logged-in
+  user can read any other user's records. **Worst open bug; fix first.**
+- 🟠 **D5 — 38 hardcoded `localhost:5000` URLs in 22 files** + CORS hardcoded in
+  `server.js:39`. **Blocks deploy.**
+- 🟠 **D6** — orders written by a browser callback instead of the Stripe webhook
+- 🟡 **D7/D8/D9** — hardcoded products and cart bugs; fabricated dashboard numbers; dead code
+
+Phase order, traps and deploy steps: **[docs/HANDOVER.md](docs/HANDOVER.md)**.
+Full detail with file:line in [docs/AUDIT.md](docs/AUDIT.md).
 
 ## The rules that matter most here
 
