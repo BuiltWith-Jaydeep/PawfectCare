@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import client from '../../api/client';
 
 const ManageAccount = () => {
   const { user } = useAuth();
@@ -25,12 +26,8 @@ const ManageAccount = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:5000/api/users/me', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (!response.ok) throw new Error('Failed to fetch user data');
-        const data = await response.json();
+        const response = await client.get('/api/users/me');
+        const data = response.data;
         setFormData({
           fullName: data.username || data.fullName || '',
           email: data.email || '',
@@ -110,19 +107,9 @@ const ManageAccount = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/users/me', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(updateData),
-      });
+      const response = await client.put('/api/users/me', updateData);
 
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error(result.message || 'Failed to update account');
-      }
+      const result = response.data;
 
       setSuccess('Account updated successfully! Password changed if provided.');
       setFormData((prev) => ({

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styles from '../styles/AdminPanel.module.css';
+import client from '../../api/client';
 
 function Daycare() {
   const [dayCares, setDayCares] = useState([]);
@@ -12,11 +13,8 @@ function Daycare() {
   // Fetch all daycare bookings
   const fetchDayCares = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/daycare', {
-        method: 'GET',
-      });
-      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-      const data = await response.json();
+      const response = await client.get('/api/daycare');
+      const data = response.data;
       setDayCares(data);
       setLoading(false);
     } catch (err) {
@@ -47,12 +45,7 @@ function Daycare() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/api/daycare/${editingDayCare._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      if (!response.ok) throw new Error('Failed to update daycare');
+      await client.put(`/api/daycare/${editingDayCare._id}`, formData);
       setEditingDayCare(null);
       setFormData({});
       await fetchDayCares();
@@ -66,10 +59,7 @@ function Daycare() {
   const handleDelete = async (id) => {
     if (window.confirm('Delete this daycare booking?')) {
       try {
-        const response = await fetch(`http://localhost:5000/api/daycare/${id}`, {
-          method: 'DELETE',
-        });
-        if (!response.ok) throw new Error('Failed to delete daycare');
+        await client.delete(`/api/daycare/${id}`);
         await fetchDayCares();
       } catch (err) {
         console.error('Delete daycare error:', err);

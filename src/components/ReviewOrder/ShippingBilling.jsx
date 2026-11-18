@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import './ShippingBilling.css';
+import client from '../../api/client';
 
 const ShippingBilling = () => {
   const { user } = useAuth(); // Get user from AuthContext
@@ -17,15 +18,8 @@ const ShippingBilling = () => {
       if (!user || !user.email) return; 
 
       try {
-        const response = await fetch('http://localhost:5000/api/users/me', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'application/json',
-          },
-        });
-        if (!response.ok) throw new Error('Failed to fetch user data');
-        const data = await response.json();
+        const response = await client.get('/api/users/me');
+        const data = response.data;
         setShippingInfo({
           name: data.username || 'Not provided',
           email: data.email || 'Not provided',

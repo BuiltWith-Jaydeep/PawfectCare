@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styles from '../styles/AdminPanel.module.css';
+import client from '../../api/client';
 
 function Vaccination() {
   const [vaccinations, setVaccinations] = useState([]);
@@ -12,11 +13,8 @@ function Vaccination() {
   // Fetch all vaccinations
   const fetchVaccinations = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/vaccinations', {
-        method: 'GET',
-      });
-      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-      const data = await response.json();
+      const response = await client.get('/api/vaccinations');
+      const data = response.data;
       setVaccinations(data);
       setLoading(false);
     } catch (err) {
@@ -47,12 +45,7 @@ function Vaccination() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/api/vaccinations/${editingVaccination._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      if (!response.ok) throw new Error('Failed to update vaccination');
+      await client.put(`/api/vaccinations/${editingVaccination._id}`, formData);
       setEditingVaccination(null);
       setFormData({});
       await fetchVaccinations();
@@ -66,10 +59,7 @@ function Vaccination() {
   const handleDelete = async (id) => {
     if (window.confirm('Delete this vaccination appointment?')) {
       try {
-        const response = await fetch(`http://localhost:5000/api/vaccinations/${id}`, {
-          method: 'DELETE',
-        });
-        if (!response.ok) throw new Error('Failed to delete vaccination');
+        await client.delete(`/api/vaccinations/${id}`);
         await fetchVaccinations();
       } catch (err) {
         console.error('Delete vaccination error:', err);

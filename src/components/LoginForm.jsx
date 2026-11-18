@@ -1,8 +1,8 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
+import client from '../api/client';
 
 const LoginForm = () => {
   // State for regular login
@@ -47,7 +47,7 @@ const LoginForm = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await client.post('/api/auth/login', {
         email,
         password,
       });
@@ -104,8 +104,8 @@ const LoginForm = () => {
 
     setAdminLoading(true);
     try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/auth/login`,
+      const { data } = await client.post(
+        '/api/auth/login',
         { email: adminEmail, password: adminPassword }
       );
 

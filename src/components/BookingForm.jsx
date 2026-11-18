@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./BookingForm.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import client from '../api/client';
 import { useAuth } from "../context/AuthContext"; 
 
 // Breed options
@@ -219,8 +219,7 @@ const BookingForm = ({ isOpen, onClose }) => {
         };
 
         // Send POST request to backend
-        const response = await axios.post(
-          "http://localhost:5000/api/consultations",
+        const response = await client.post("/api/consultations",
           dataToSend,
           {
             headers: {

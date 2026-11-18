@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { useLocation, useNavigate } from 'react-router-dom';
+import client from '../../api/client';
 
 // Load Stripe 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
@@ -35,21 +36,10 @@ const CallToAction = () => {
 
     try {
       // Send formatted cart to backend to create Stripe session
-      const response = await fetch('http://localhost:5000/api/payment/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`, 
-        },
-        body: JSON.stringify({ cart: formattedCart }),
-      });
+      const response = await client.post('/api/payment/create-checkout-session', { cart: formattedCart });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to create checkout session: ${errorText}`);
-      }
 
-      const { sessionId } = await response.json();
+      const { sessionId } = response.data;
 
       // Redirect to Stripe Checkout
       const stripe = await stripePromise;

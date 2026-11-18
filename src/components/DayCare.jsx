@@ -8,7 +8,7 @@ import "react-date-range/dist/theme/default.css";
 import { addDays, differenceInDays } from "date-fns";
 import "./DayCare.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import client from '../api/client';
 import { useAuth } from "../context/AuthContext";
 
 // Breed options
@@ -159,8 +159,7 @@ const DayCare = ({ isOpen, onClose }) => {
         };
 
         // Send POST request to backend
-        const response = await axios.post(
-          "http://localhost:5000/api/daycare",
+        const response = await client.post("/api/daycare",
           dataToSend,
           {
             headers: {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styles from '../styles/AdminPanel.module.css';
+import client from '../../api/client';
 
 function Grooming() {
   const [groomings, setGroomings] = useState([]);
@@ -12,11 +13,8 @@ function Grooming() {
   // Fetch all grooming appointments
   const fetchGroomings = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/grooming', {
-        method: 'GET',
-      });
-      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-      const data = await response.json();
+      const response = await client.get('/api/grooming');
+      const data = response.data;
       setGroomings(data);
       setLoading(false);
     } catch (err) {
@@ -44,12 +42,7 @@ function Grooming() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/api/grooming/${editingGrooming._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      if (!response.ok) throw new Error('Failed to update grooming');
+      await client.put(`/api/grooming/${editingGrooming._id}`, formData);
       setEditingGrooming(null);
       setFormData({});
       await fetchGroomings();
@@ -63,10 +56,7 @@ function Grooming() {
   const handleDelete = async (id) => {
     if (window.confirm('Delete this grooming appointment?')) {
       try {
-        const response = await fetch(`http://localhost:5000/api/grooming/${id}`, {
-          method: 'DELETE',
-        });
-        if (!response.ok) throw new Error('Failed to delete grooming');
+        await client.delete(`/api/grooming/${id}`);
         await fetchGroomings();
       } catch (err) {
         console.error('Delete grooming error:', err);

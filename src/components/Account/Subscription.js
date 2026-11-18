@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
+import client from '../../api/client';
 
 const Subscription = () => {
   const { user, isAuthenticated } = useAuth();
@@ -27,27 +28,10 @@ const Subscription = () => {
 
       try {
         // Fetch subscription data
-        const subscriptionResponse = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/subscriptions/user/${user.id}`,
-          {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-
-        if (!subscriptionResponse.ok) {
-          const errorText = await subscriptionResponse.text();
-          if (subscriptionResponse.status === 404) {
-            setSubscription(null); // No subscription found
-          } else {
-            throw new Error(`Failed to fetch subscription: ${errorText}`);
-          }
-        } else {
-          const subscriptionData = await subscriptionResponse.json();
-          console.log('Fetched subscription data:', subscriptionData); // Debug log
+        // Fetch subscription data (404 = the user has no subscription yet)
+        try {
+          const subscriptionResponse = await client.get(`/api/subscription/user/${user.id}`);
+          const subscriptionData = subscriptionResponse.data;
           // Handle different possible response structures
           if (Array.isArray(subscriptionData) && subscriptionData.length > 0) {
             setSubscription(subscriptionData[0]); // Take the first subscription if array
@@ -56,25 +40,14 @@ const Subscription = () => {
           } else {
             setSubscription(null); // No valid subscription data
           }
+        } catch (subErr) {
+          if (subErr.response?.status === 404) setSubscription(null);
+          else throw subErr;
         }
 
         // Fetch billing history
-        const billingResponse = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/payments/user/${user.id}`,
-          {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-
-        if (!billingResponse.ok) {
-          const errorText = await billingResponse.text();
-          throw new Error(`Failed to fetch billing history: ${errorText}`);
-        }
-        const billingData = await billingResponse.json();
+        const billingResponse = await client.get(`/api/payments/user/${user.id}`);
+        const billingData = billingResponse.data;
         setBillingHistory(Array.isArray(billingData) ? billingData : []);
       } catch (err) {
         console.error('Subscription fetch error:', err);

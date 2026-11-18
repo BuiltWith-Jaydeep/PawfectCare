@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import client from '../../api/client';
 
 const ManagePet = () => {
   const [pets, setPets] = useState([]);
@@ -10,12 +11,8 @@ const ManagePet = () => {
   useEffect(() => {
     const fetchPetData = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:5000/api/users/me', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (!response.ok) throw new Error('Failed to fetch pet data');
-        const data = await response.json();
+        const response = await client.get('/api/users/me');
+        const data = response.data;
         setPets([{ name: data.petName || '', type: data.petType || '', breed: data.breed || '' }]);
       } catch (err) {
         setError(err.message || 'Error fetching pet data');

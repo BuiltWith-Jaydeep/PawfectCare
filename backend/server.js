@@ -35,8 +35,9 @@ app.use('/api/webhook', express.raw({ type: 'application/json' }), webhookRoutes
 
 //  Set up other middleware
 app.use(express.json());
+const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:3000';
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: CLIENT_URL,
   credentials: true,
 }));
 
@@ -103,8 +104,8 @@ app.post('/api/payment/create-checkout-session', authMiddleware, async (req, res
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: 'http://localhost:3000/payment-success?session_id={CHECKOUT_SESSION_ID}',
-      cancel_url: 'http://localhost:3000/checkout',
+      success_url: `${CLIENT_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${CLIENT_URL}/checkout`,
       metadata: {
         userId: req.user.id,
         cart: JSON.stringify(cart),

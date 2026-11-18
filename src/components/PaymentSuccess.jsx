@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './PaymentSuccess.css';
+import client from '../api/client';
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
@@ -12,9 +13,8 @@ const PaymentSuccess = () => {
 
     if (sessionId) {
       // Call the backend to confirm payment and save order
-      fetch(`http://localhost:5000/api/payment/confirm?session_id=${sessionId}`)
-        .then(res => res.json())
-        .then(data => console.log('Order save response:', data))
+      client.get(`/api/payment/confirm?session_id=${sessionId}`)
+        .then(res => console.log('Order save response:', res.data))
         .catch(err => console.error('Error saving order:', err));
     }
 

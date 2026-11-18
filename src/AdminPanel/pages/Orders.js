@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styles from '../styles/AdminPanel.module.css';
+import client from '../../api/client';
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -12,15 +13,10 @@ function Orders() {
   // Fetch all orders from backend
   const fetchOrders = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/orders', {
-        method: 'GET',
-      });
+      const response = await client.get('/api/orders');
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
 
-      const data = await response.json();
+      const data = response.data;
       setOrders(data);
       setLoading(false);
     } catch (err) {
@@ -50,17 +46,8 @@ function Orders() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/api/orders/update/${editingOrder._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      await client.put(`/api/orders/update/${editingOrder._id}`, formData);
 
-      if (!response.ok) {
-        throw new Error('Failed to update order');
-      }
 
       setEditingOrder(null);
       setFormData({ status: '' });

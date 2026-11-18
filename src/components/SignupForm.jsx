@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import client from '../api/client';
 import { useAuth } from '../context/AuthContext';
 
 const dogBreeds = ["Labrador", "Poodle", "Bulldog", "Beagle", "German Shepherd"];
@@ -95,7 +95,7 @@ const SignupForm = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/signup', signupData);
+      const response = await client.post('/api/auth/signup', signupData);
       const { token, user } = response.data;
 
       console.log('Signup response:', response.data); // Debug log

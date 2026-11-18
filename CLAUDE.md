@@ -41,9 +41,9 @@ Fixed and verified:
 
 - ✅ **D3** — ownership enforced in all 5 service controllers (403 for another user's id; admin allowed). Verified live.
 
+- ✅ **D5** — all HTTP goes through `src/api/client.js` (`REACT_APP_API_URL`, 401 interceptor); CORS and Stripe return URLs read `CLIENT_URL`; `/api/subscription` path fixed. Verified: build exit 0, CORS header echoes `CLIENT_URL`.
+
 Still broken:
-- 🟠 **D5 — 38 hardcoded `localhost:5000` URLs in 22 files** + CORS hardcoded in
-  `server.js:39`. **Blocks deploy.**
 - 🟠 **D6** — orders written by a browser callback instead of the Stripe webhook
 - 🟡 **D7/D8/D9** — hardcoded products and cart bugs; fabricated dashboard numbers; dead code
 

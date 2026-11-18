@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styles from '../styles/AdminPanel.module.css';
+import client from '../../api/client';
 
 function Adoption() {
   const [adoptions, setAdoptions] = useState([]);
@@ -12,15 +13,10 @@ function Adoption() {
   // Fetch all adoptions from the backend
   const fetchAdoptions = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/adoption', {
-        method: 'GET',
-      });
+      const response = await client.get('/api/adoption');
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
 
-      const data = await response.json();
+      const data = response.data;
       setAdoptions(data);
       setLoading(false);
     } catch (err) {
@@ -54,17 +50,8 @@ function Adoption() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/api/adoption/${editingAdoption._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      await client.put(`/api/adoption/${editingAdoption._id}`, formData);
 
-      if (!response.ok) {
-        throw new Error('Failed to update adoption');
-      }
 
       setEditingAdoption(null);
       setFormData({});
@@ -79,13 +66,8 @@ function Adoption() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this adoption request?')) {
       try {
-        const response = await fetch(`http://localhost:5000/api/adoption/${id}`, {
-          method: 'DELETE',
-        });
+        await client.delete(`/api/adoption/${id}`);
 
-        if (!response.ok) {
-          throw new Error('Failed to delete adoption');
-        }
 
         await fetchAdoptions(); // Refresh the list
       } catch (err) {

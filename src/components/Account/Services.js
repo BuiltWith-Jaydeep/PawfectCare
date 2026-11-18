@@ -5,6 +5,7 @@ import GroomingDetails from './GroomingDetails';
 import AdoptionDetails from './AdoptionDetails';
 import DayCareDetails from './DayCareDetails';
 import VaccinationDetails from './VaccinationDetails';
+import client from '../../api/client';
 
 const Services = () => {
   const { user, isAuthenticated } = useAuth();
@@ -44,62 +45,32 @@ const Services = () => {
 
       try {
         // Fetch Consultations
-        const consultationResponse = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/consultations/user/${userId}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        if (!consultationResponse.ok) {
-          throw new Error(`Failed to fetch consultations: ${consultationResponse.status}`);
-        }
-        const consultationData = await consultationResponse.json();
+        const consultationResponse = await client.get(`/api/consultations/user/${userId}`);
+        const consultationData = consultationResponse.data;
         console.log('Consultation data:', consultationData);
         setConsultations(consultationData);
 
         // Fetch Grooming Appointments
-        const groomingResponse = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/grooming/user/${userId}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        if (!groomingResponse.ok) {
-          throw new Error(`Failed to fetch grooming: ${groomingResponse.status}`);
-        }
-        const groomingData = await groomingResponse.json();
+        const groomingResponse = await client.get(`/api/grooming/user/${userId}`);
+        const groomingData = groomingResponse.data;
         console.log('Grooming data:', groomingData);
         setGroomingAppointments(groomingData);
 
         // Fetch Adoption Requests
-        const adoptionResponse = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/adoption/user/${userId}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        if (!adoptionResponse.ok) {
-          throw new Error(`Failed to fetch adoption: ${adoptionResponse.status}`);
-        }
-        const adoptionData = await adoptionResponse.json();
+        const adoptionResponse = await client.get(`/api/adoption/user/${userId}`);
+        const adoptionData = adoptionResponse.data;
         console.log('Adoption data:', adoptionData);
         setAdoptionRequests(adoptionData);
 
         // Fetch DayCare Bookings
-        const dayCareResponse = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/daycare/user/${userId}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        if (!dayCareResponse.ok) {
-          throw new Error(`Failed to fetch daycare: ${dayCareResponse.status}`);
-        }
-        const dayCareData = await dayCareResponse.json();
+        const dayCareResponse = await client.get(`/api/daycare/user/${userId}`);
+        const dayCareData = dayCareResponse.data;
         console.log('Daycare data:', dayCareData);
         setDayCareBookings(dayCareData);
 
         // Fetch Vaccinations
-        const vaccinationResponse = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/vaccinations/user/${userId}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        if (!vaccinationResponse.ok) {
-          throw new Error(`Failed to fetch vaccinations: ${vaccinationResponse.status}`);
-        }
-        const vaccinationData = await vaccinationResponse.json();
+        const vaccinationResponse = await client.get(`/api/vaccinations/user/${userId}`);
+        const vaccinationData = vaccinationResponse.data;
         console.log('Vaccination data:', vaccinationData);
         setVaccinations(vaccinationData);
       } catch (err) {

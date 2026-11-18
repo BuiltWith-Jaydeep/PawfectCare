@@ -4,6 +4,7 @@ import { productImages } from '../../pages/ShopPage/productImages';
 import Modal from 'react-modal';
 import toast, { Toaster } from 'react-hot-toast';
 import ProgressBar from '@ramonak/react-progress-bar';
+import client from '../../api/client';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -18,12 +19,8 @@ const Orders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:5000/api/orders/me', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (!response.ok) throw new Error('Failed to fetch orders');
-        const data = await response.json();
+        const response = await client.get('/api/orders/me');
+        const data = response.data;
         setOrders(data);
         setSuccess(data.length > 0 ? '' : '');
       } catch (err) {

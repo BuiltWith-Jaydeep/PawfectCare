@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./BookingF.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import client from '../api/client';
 import { useAuth } from "../context/AuthContext";
 
 const AdoptionForm = ({ isOpen, onClose }) => {
@@ -70,8 +70,7 @@ const AdoptionForm = ({ isOpen, onClose }) => {
           appointmentDate: formData.appointmentDate.toISOString().split("T")[0],
         };
 
-        const response = await axios.post(
-          "http://localhost:5000/api/adoption",
+        const response = await client.post("/api/adoption",
           dataToSend,
           {
             headers: {

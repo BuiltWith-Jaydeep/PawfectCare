@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'; 
 import { motion } from 'framer-motion';
 import styles from '../styles/AdminPanel.module.css';
+import client from '../../api/client';
 
 function Consultation() {
   const [consultations, setConsultations] = useState([]);
@@ -12,11 +13,8 @@ function Consultation() {
   // Fetch all consultations
   const fetchConsultations = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/consultations', {
-        method: 'GET',
-      });
-      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-      const data = await response.json();
+      const response = await client.get('/api/consultations');
+      const data = response.data;
       setConsultations(data);
       setLoading(false);
     } catch (err) {
@@ -47,12 +45,7 @@ function Consultation() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/api/consultations/${editingConsultation._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      if (!response.ok) throw new Error('Failed to update consultation');
+      await client.put(`/api/consultations/${editingConsultation._id}`, formData);
       setEditingConsultation(null);
       setFormData({});
       await fetchConsultations();
@@ -66,10 +59,7 @@ function Consultation() {
   const handleDelete = async (id) => {
     if (window.confirm('Delete this consultation?')) {
       try {
-        const response = await fetch(`http://localhost:5000/api/consultations/${id}`, {
-          method: 'DELETE',
-        });
-        if (!response.ok) throw new Error('Failed to delete consultation');
+        await client.delete(`/api/consultations/${id}`);
         await fetchConsultations();
       } catch (err) {
         console.error('Delete consultation error:', err);

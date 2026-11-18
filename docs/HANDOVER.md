@@ -32,12 +32,12 @@ Written 18 Nov 2026. Read this first, then [RULES.md](RULES.md) and [AUDIT.md](A
 | **D2** | Admin auth + authorization | 401 / 403 / 200 verified live on all 18 endpoints |
 | **D4** | Database wired and verified | real data returned through the API |
 | **D3** | Ownership checks restored in 5 controllers | A→B 403, A→A 200, admin→B 200 on all 5 endpoints |
+| **D5** | One axios client (`src/api/client.js`); CORS + Stripe return URLs from `CLIENT_URL` | build exit 0; 0 hardcoded hosts in `src/` except the env-driven fallback; CORS preflight echoes `CLIENT_URL`; `/api/subscription/user/:id` → 200 for owner |
 
 ### Not started
 
 | ID | What | Why it matters |
 |---|---|---|
-| **D5** 🟠 | 38 hardcoded `localhost:5000` URLs in 22 files | **Blocks deploy** — the live site would call the user's laptop |
 | **D6** 🟠 | Orders written by a browser callback, not the webhook | Paid orders lost if the browser closes |
 | **D7** 🟡 | 60 products hardcoded in the component; no `Product` model | Cart bugs: duplicates, quantity ignored, lost on refresh |
 | **D8** 🟡 | Admin dashboard chart is `[5,20,7,8,6,9,5]` | Fabricated numbers |
@@ -86,7 +86,7 @@ Allow an admin through: `req.user.role === 'admin'`.
 - admin requesting anyone's → **200**
 - then `npx react-scripts build` → exit 0
 
-### Phase 2 — D5, one API client 🟠 *this is the real deploy blocker*
+### Phase 2 — D5, one API client ✅ *done — kept for reference*
 
 38 occurrences of `http://localhost:5000` across 22 files in `src/`. A deployed frontend
 would try to reach the visitor's own machine.
@@ -251,5 +251,5 @@ git push origin main     # D3 is committed but NOT yet pushed
 grep -rno "localhost:5000" src --include=*.js --include=*.jsx | wc -l   # expect 38
 ```
 
-**Phase 1 (D3) is done.** Start at **Phase 2 (D5)** — the deploy blocker.
+**Phases 1–2 (D3, D5) are done.** Start at **Phase 3 (D6)** — the Stripe webhook.
 Verify with curl before reporting anything done (RULES R10).

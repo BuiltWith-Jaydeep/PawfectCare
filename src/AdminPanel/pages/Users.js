@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styles from '../styles/AdminPanel.module.css';
+import client from '../../api/client';
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -32,15 +33,8 @@ function Users() {
   const fetchUsers = async () => {
     try {
       // GET request, no headers or body
-      const response = await fetch('http://localhost:5000/api/users', {
-        method: 'GET',
-      });
-      if (!response.ok) {
-        const errorText = await response.text(); // Get raw response for debugging
-        console.error('Fetch failed:', response.status, errorText);
-        throw new Error(`Failed to fetch users: ${response.status} - ${errorText}`);
-      }
-      const data = await response.json();
+      const response = await client.get('/api/users');
+      const data = response.data;
       setUsers(data);
       setLoading(false);
     } catch (err) {
@@ -59,22 +53,13 @@ function Users() {
   // Create or Update user
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
     const method = editUser ? 'PUT' : 'POST';
     const url = editUser
-      ? `http://localhost:5000/api/users/${editUser._id}`
-      : 'http://localhost:5000/api/users';
+      ? `/api/users/${editUser._id}`
+      : '/api/users';
 
     try {
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      });
-      if (!response.ok) throw new Error('Failed to save user');
+      await client({ url, method, data: formData });
       await fetchUsers(); // Refresh user list
       setShowForm(false);
       setEditUser(null);
@@ -95,15 +80,8 @@ function Users() {
 
   // Delete user
   const handleDelete = async (id) => {
-    const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`http://localhost:5000/api/users/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-      if (!response.ok) throw new Error('Failed to delete user');
+      await client.delete(`/api/users/${id}`);
       await fetchUsers(); // Refresh user list
     } catch (err) {
       setError(err.message);

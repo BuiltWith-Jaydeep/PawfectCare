@@ -1,7 +1,7 @@
 import React from "react";
 import { useInView } from "react-intersection-observer";
 import "./PricingSection.css";
-import axios from "axios";
+import client from '../../../api/client';
 
 const PricingSection = () => {
   // Hooks for scroll-triggered animations
@@ -20,8 +20,7 @@ const PricingSection = () => {
         return;
       }
 
-      const response = await axios.post(
-        "http://localhost:5000/api/subscription/create-checkout-session",
+      const response = await client.post("/api/subscription/create-checkout-session",
         { priceId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
