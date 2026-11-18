@@ -245,9 +245,11 @@ a backup of the original history.
 
 ```bash
 cd d:\PROJECTS\zzPawfectCare\pawfectcare
-git log --oneline -3                      # expect 2f916f9 at the top
-git status --short                        # expect clean
-grep -rn "TEMPORARY" backend/controllers/ # the 5 D3 sites
+git log --oneline -3     # expect 1bc0b71 (D3) at the top
+git status --short       # expect clean
+git push origin main     # D3 is committed but NOT yet pushed
+grep -rno "localhost:5000" src --include=*.js --include=*.jsx | wc -l   # expect 38
 ```
 
-Then start **Phase 1 (D3)**. Verify with curl before reporting anything done (RULES R10).
+**Phase 1 (D3) is done.** Start at **Phase 2 (D5)** — the deploy blocker.
+Verify with curl before reporting anything done (RULES R10).
