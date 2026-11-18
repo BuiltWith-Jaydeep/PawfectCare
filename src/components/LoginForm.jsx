@@ -16,7 +16,10 @@ const LoginForm = () => {
   const [hoverCount, setHoverCount] = useState(0);
   const [requiredHovers, setRequiredHovers] = useState(2);
   const [showPopup, setShowPopup] = useState(false);
+  const [adminEmail, setAdminEmail] = useState('');
   const [adminPassword, setAdminPassword] = useState('');
+  const [adminError, setAdminError] = useState('');
+  const [adminLoading, setAdminLoading] = useState(false);
 
   // Hooks
   const navigate = useNavigate();
@@ -87,14 +90,45 @@ const LoginForm = () => {
     }
   }, [hoverCount, requiredHovers]);
 
-  // Admin password check
-  const handleAdminSubmit = () => {
-    if (adminPassword === 'REDACTED_ADMIN_PASSWORD') {
-      navigate('/admin'); // Placeholder route
-    } else {
+  // Admin access — authenticates against the server and requires role 'admin'.
+  // The secret hover reveal is kept as an easter egg, but it no longer grants
+  // anything by itself: credentials are verified by the API, and every admin
+  // endpoint independently enforces `requireAdmin`.
+  const handleAdminSubmit = async () => {
+    setAdminError('');
+
+    if (!adminEmail || !adminPassword) {
+      setAdminError('Enter both email and password.');
+      return;
+    }
+
+    setAdminLoading(true);
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/auth/login`,
+        { email: adminEmail, password: adminPassword }
+      );
+
+      if (data?.user?.role !== 'admin') {
+        setAdminError('This account does not have admin access.');
+        setAdminPassword('');
+        return;
+      }
+
+      if (login(data.token, data.user)) {
+        navigate('/admin', { replace: true });
+      } else {
+        setAdminError('Login failed: invalid response from server.');
+      }
+    } catch (err) {
+      setAdminError(
+        err.response?.data?.message || err.response?.data?.error || 'Invalid credentials.'
+      );
+      setAdminPassword('');
       setShowPopup(false);
       setRequiredHovers((prev) => prev + 1);
-      setAdminPassword('');
+    } finally {
+      setAdminLoading(false);
     }
   };
 
@@ -252,11 +286,27 @@ const LoginForm = () => {
           transition={{ duration: 0.3 }}
         >
           <input
+            type="email"
+            placeholder="Admin email"
+            autoComplete="username"
+            value={adminEmail}
+            onChange={(e) => setAdminEmail(e.target.value.trim())}
+            onKeyDown={(e) => e.key === 'Enter' && handleAdminSubmit()}
+            disabled={adminLoading}
+          />
+          <input
             type="password"
+            placeholder="Admin password"
+            autoComplete="current-password"
             value={adminPassword}
             onChange={(e) => setAdminPassword(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleAdminSubmit()}
+            disabled={adminLoading}
           />
+          {adminLoading && <p style={{ margin: '6px 0 0', fontSize: '0.8rem' }}>Checking…</p>}
+          {adminError && (
+            <p style={{ color: '#ef4444', margin: '6px 0 0', fontSize: '0.8rem' }}>{adminError}</p>
+          )}
         </motion.div>
       )}
     </div>

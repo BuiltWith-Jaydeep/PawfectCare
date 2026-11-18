@@ -16,7 +16,6 @@ exports.loginUser = async (req, res) => {
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log('Password match:', isMatch);
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
@@ -29,7 +28,6 @@ exports.loginUser = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
-    console.log('Generated token:', token);
 
     // Include id in userData
     const userData = {
@@ -41,11 +39,11 @@ exports.loginUser = async (req, res) => {
       petName: user.petName,
       petType: user.petType,
       breed: user.breed,
+      role: user.role || 'user',
     };
     console.log('User data prepared:', userData);
 
     const response = { message: 'Login successful!', token, user: userData };
-    console.log('Sending response:', response);
     res.json(response);
   } catch (error) {
     console.error('Login error:', error);
@@ -55,6 +53,8 @@ exports.loginUser = async (req, res) => {
 
 // POST /api/auth/signup
 exports.signupUser = async (req, res) => {
+  // NOTE: `role` is deliberately NOT destructured from req.body — a signup
+  // request must never be able to make itself an admin. It defaults to 'user'.
   const { username, email, password, phone, address, petName, petType, breed } = req.body;
 
   console.log('Signup attempt with:', { username, email, phone, address, petName, petType, breed });
@@ -94,7 +94,6 @@ exports.signupUser = async (req, res) => {
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
-    console.log('Generated token for signup:', token);
 
     // Include id in userData
     const userData = {
@@ -106,6 +105,7 @@ exports.signupUser = async (req, res) => {
       petName: newUser.petName,
       petType: newUser.petType,
       breed: newUser.breed,
+      role: newUser.role || 'user',
     };
     console.log('Signup user data prepared:', userData);
 

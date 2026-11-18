@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middleware/auth');
+const { requireAdmin } = require('../middleware/auth');
 const User = require('../models/User');
 const userController = require('../controllers/userController');
 
@@ -54,9 +55,9 @@ router.put('/me', authMiddleware, async (req, res) => {
 });
 
 // CRUD routes for admin panel
-router.get('/', userController.getAllUsers);         // Fetch all users (no auth required)
-router.post('/', authMiddleware, userController.createUser);        // Create a new user
-router.put('/:id', userController.updateUser);      // Update a user by ID (no auth required)
-router.delete('/:id', authMiddleware, userController.deleteUser);   // Delete a user by ID
+router.get('/', authMiddleware, requireAdmin, userController.getAllUsers);   // access: admin only
+router.post('/', authMiddleware, requireAdmin, userController.createUser);   // access: admin only
+router.put('/:id', authMiddleware, requireAdmin, userController.updateUser); // access: admin only
+router.delete('/:id', authMiddleware, requireAdmin, userController.deleteUser); // access: admin only
 
 module.exports = router;

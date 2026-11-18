@@ -1,93 +1,120 @@
-# Getting Started with Create React App
+# 🐾 PawfectCare
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack pet-care platform: book veterinary consultations, grooming, boarding/daycare,
+vaccinations and adoptions, shop for supplies, and manage subscriptions — with a customer
+account area and an admin panel.
 
-## Available Scripts
+**Stack:** React 18 (CRA) · Express 4 · MongoDB (Mongoose) · Stripe · Framer Motion
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Accounts** — JWT auth, profile + pet details, protected account area
+- **5 service bookings** — consultation, grooming, boarding/daycare, vaccination, adoption; each with a qualifying form, date + time-slot picker and price estimate
+- **Shop** — 60 products, category/price filters, search, cart, Stripe Checkout
+- **Subscriptions** — 3 tiers (Basic / Premium / Ultimate), recorded via Stripe webhook
+- **Account area** — orders, bookings, subscription + billing, manage pets
+- **Admin panel** — users, orders, and all 5 service queues
+- **Content** — about, team, blog, care guides, FAQs, testimonials
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Quick start
 
-### `npm test`
+**Prerequisites:** Node ≥ 20, a MongoDB Atlas cluster (free M0 is fine), a Stripe test account.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+git clone https://github.com/BuiltWith-Jaydeep/PawfectCare.git
+cd PawfectCare/pawfectcare
 
-### `npm run build`
+# install
+npm install
+cd backend && npm install && cd ..
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# configure — copy the templates and fill in your own values
+cp .env.example .env
+cp backend/.env.example backend/.env
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Then run two terminals:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+# Terminal 1 — API on :5000
+cd backend && npm start
 
-### `npm run eject`
+# Terminal 2 — React on :3000
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Open <http://localhost:3000>. A healthy backend prints `Connected to MongoDB`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-
-
-
----------------------------------------------------------------------------------------------------------------------------------------------------
-
-PawfectCare mongodb atlas
-https://account.mongodb.com/account/login
-iske liye google account login krke krna pdega 
-or stripe backend ke liye powershell me jake ye likhne ka 
+For Stripe payment testing, a third terminal:
+```bash
 stripe listen --forward-to http://localhost:5000/api/webhook
+```
+Copy the `whsec_...` it prints into `STRIPE_WEBHOOK_SECRET`.
 
-user@example.com
-REDACTED_PASSWORD
-admin password REDACTED_ADMIN_PASSWORD
+### Configuration
 
+All config is environment-driven — see [`.env.example`](.env.example) and
+[`backend/.env.example`](backend/.env.example), which document every variable and where to get
+it. Detailed walkthrough in **[docs/SETUP.md](docs/SETUP.md)**.
 
-hotelsuite ke liye 
-user2@example.com 
-REDACTED_PASSWORD
-admin ka password
-username -siteadmin
-pass - HotelSuite
+> ⚠️ Never commit `.env` files. Anything prefixed `REACT_APP_` is compiled into the public
+> browser bundle — publishable keys only.
+
+## Documentation
+
+Full docs live in **[`docs/`](docs/)** — start at **[docs/INDEX.md](docs/INDEX.md)**.
+
+| Doc | Contents |
+|---|---|
+| [AUDIT.md](docs/AUDIT.md) | Known issues with file:line references |
+| [SETUP.md](docs/SETUP.md) | Getting it running, env variables |
+| [PRD.md](docs/PRD.md) | Product requirements, personas, user journeys |
+| [TRD.md](docs/TRD.md) | Stack, data model, API contract, deliverables |
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design, trust boundaries |
+| [DATA-FLOW.md](docs/DATA-FLOW.md) | End-to-end request traces |
+| [PAGES.md](docs/PAGES.md) | Every route, component and data source |
+| [DESIGN.md](docs/DESIGN.md) | Colour, type, motion, components |
+| [RULES.md](docs/RULES.md) | Engineering constraints |
+| [MEMORY.md](docs/MEMORY.md) | Decisions and verified facts |
+
+## Project status
+
+🚧 **Under active repair.** The app builds and boots, but the database connection must be
+reconfigured and several auth/authorization defects are being fixed. See
+[docs/AUDIT.md](docs/AUDIT.md) for the full list and [docs/TRD.md](docs/TRD.md) for the fix
+order.
+
+## Structure
+
+```
+pawfectcare/
+├── src/
+│   ├── pages/          route-level screens
+│   ├── components/     UI, booking forms, account tabs, checkout
+│   ├── AdminPanel/     admin SPA (dashboard, users, orders, services)
+│   ├── context/        AuthContext
+│   └── assets/styles/  SCSS variables and animations
+├── backend/
+│   ├── models/         8 Mongoose schemas
+│   ├── controllers/    request handlers
+│   ├── routes/         Express routers
+│   ├── middleware/     JWT auth
+│   └── server.js       entry point
+├── public/
+└── docs/
+```
+
+## Scripts
+
+| Command | Does |
+|---|---|
+| `npm start` | React dev server (:3000) |
+| `npm run build` | Production build → `build/` |
+| `npm test` | CRA test runner |
+| `cd backend && npm start` | API server (:5000) |
+
+## License
+
+ISC

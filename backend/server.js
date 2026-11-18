@@ -42,7 +42,17 @@ app.use(cors({
 
 // env
 const PORT = process.env.PORT || 5000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://cppraja5722:REDACTED_DB_PASSWORD@animal-hospital-cluster.lfiac.mongodb.net/?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI;
+if (!MONGODB_URI) {
+  console.error('MONGODB_URI is not set in .env file!');
+  process.exit(1);
+}
+
+// Optional: some local resolvers refuse SRV lookups (querySrv ECONNREFUSED).
+// Set DNS_SERVERS=8.8.8.8,1.1.1.1 in .env to work around it.
+if (process.env.DNS_SERVERS) {
+  require('dns').setServers(process.env.DNS_SERVERS.split(',').map(s => s.trim()));
+}
 
 // Connect to MongoDB
 mongoose.connect(MONGODB_URI)

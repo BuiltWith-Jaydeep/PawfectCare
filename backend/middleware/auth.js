@@ -1,44 +1,80 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
-const authMiddleware = (req, res, next) => {
-  // Extract token from Authorization header (Bearer <token> format)
+/**
+ * authMiddleware — answers "who are you?"
+ *
+ * Verifies the Bearer JWT, then loads the user from the database so that
+ * `req.user.role` reflects the CURRENT stored role, not whatever a (possibly
+ * stale or tampered) token claims. Downstream code must use `req.user.id`
+ * for authorization, never a client-supplied id from params/body/query.
+ *
+ * Sets: req.user = { id, _id, role, email, username, stripeCustomerId }
+ */
+const authMiddleware = async (req, res, next) => {
   const authHeader = req.header('Authorization');
-  const token = authHeader && authHeader.startsWith('Bearer ') 
-    ? authHeader.replace('Bearer ', '') 
+  const token = authHeader && authHeader.startsWith('Bearer ')
+    ? authHeader.slice(7).trim()
     : null;
 
-  // Check if token is provided
   if (!token) {
-    console.log('No token provided in request:', req.path); // Log the route for debugging
     return res.status(401).json({ error: 'Access denied. No token provided.' });
   }
 
   try {
-    // Verify JWT_SECRET 
     if (!process.env.JWT_SECRET) {
       console.error('JWT_SECRET is not defined in environment variables');
-      throw new Error('Server configuration error');
+      return res.status(500).json({ error: 'Server configuration error' });
     }
 
-    // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(`Token verified successfully for user ID: ${decoded.id} on route: ${req.path}`); // Log success
 
-    // Attach user ID to request object
-    req.user = { id: decoded.id };
+    // Re-read the user so role changes/deletions take effect immediately.
+    const user = await User.findById(decoded.id).select('-password');
+    if (!user) {
+      return res.status(401).json({ error: 'Account no longer exists. Please log in again.' });
+    }
 
-    // Proceed to next middleware
+    req.user = {
+      id: String(user._id),
+      _id: user._id,
+      role: user.role || 'user',
+      email: user.email,
+      username: user.username,
+      stripeCustomerId: user.stripeCustomerId,
+    };
+
     next();
   } catch (error) {
-    console.error('Token verification error:', error.message, 'on route:', req.path);
     if (error.name === 'TokenExpiredError') {
       return res.status(401).json({ error: 'Token has expired. Please log in again.' });
     }
     if (error.name === 'JsonWebTokenError') {
-      return res.status(400).json({ error: 'Invalid token provided.' });
+      return res.status(401).json({ error: 'Invalid token provided.' });
     }
+    console.error('Token verification error:', error.message, 'on route:', req.path);
     return res.status(500).json({ error: 'Server error during token verification.' });
   }
 };
 
+/**
+ * requireAdmin — answers "may you?"
+ *
+ * MUST be mounted AFTER authMiddleware. Default-deny: anything that is not
+ * explicitly role 'admin' is refused.
+ */
+const requireAdmin = (req, res, next) => {
+  if (!req.user) {
+    console.error('requireAdmin used without authMiddleware on route:', req.path);
+    return res.status(500).json({ error: 'Server misconfiguration' });
+  }
+  if (req.user.role !== 'admin') {
+    console.warn(`Admin access denied for user ${req.user.id} on ${req.method} ${req.path}`);
+    return res.status(403).json({ error: 'Admin access required.' });
+  }
+  next();
+};
+
 module.exports = authMiddleware;
+module.exports.authMiddleware = authMiddleware;
+module.exports.requireAdmin = requireAdmin;

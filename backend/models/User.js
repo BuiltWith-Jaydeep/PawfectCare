@@ -46,6 +46,15 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Breed is required'], 
     trim: true,
   },
+  // Authorization role. Default 'user'; never settable from a signup request body.
+  // Promote to 'admin' only via `npm run seed:admin` or directly in the database.
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user',
+    required: true,
+    index: true,
+  },
 }, { 
   timestamps: true // Adds createdAt and updatedAt automatically
 });

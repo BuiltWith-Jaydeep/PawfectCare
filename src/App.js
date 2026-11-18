@@ -8,7 +8,8 @@ import Signup from './pages/Signup';
 import ContactPage from './pages/ContactPage/ContactPage';
 import MyAccountPage from './pages/MyAccountPage';
 import ParticlesBackground from './components/ParticlesBackground';
-import { AuthProvider, useAuth } from './context/AuthContext';
+// AuthProvider is mounted once in index.js (single source of auth truth).
+import { useAuth } from './context/AuthContext';
 import ShopPage from './pages/ShopPage/ShopPage';
 import BackToTop from './pages/HomePage/BackToTop';
 import ServicePage from './pages/ServicePage';
@@ -30,10 +31,21 @@ import AboutPawfectCare from './pages/AboutPawfectCare';
 import MeetTheTeam from './pages/MeetTheTeam';
 import AdminPanel from './AdminPanel/AdminPanel'; // AdminPanel handles 
 
-// Protected Route Component
+// Protected Route Component — requires any logged-in user
 const ProtectedRoute = ({ element }) => {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? element : <Navigate to="/login" replace />;
+};
+
+// Admin Route Component — requires a logged-in user whose role is 'admin'.
+// This is a UX guard only: it stops the admin shell from rendering for the
+// wrong user. Real enforcement lives on the server (`requireAdmin`), which
+// every admin endpoint applies independently.
+const AdminRoute = ({ element }) => {
+  const { isAuthenticated, user } = useAuth();
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (user?.role !== 'admin') return <Navigate to="/" replace />;
+  return element;
 };
 
 function App() {
@@ -42,8 +54,7 @@ function App() {
   Modal.setAppElement('#root');
 
   return (
-    <AuthProvider>
-      <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait">
         {!isIntroComplete ? (
           <IntroAnimation key="intro" onAnimationComplete={() => setIsIntroComplete(true)} />
         ) : (
@@ -63,7 +74,8 @@ function App() {
               <Route path="/my-account" element={<ProtectedRoute element={<MyAccountPage key="myAccount" />} />} />
               <Route path="/payment-success" element={<PaymentSuccess />} />
               {/* Admin Panel Route - Includes /admin/users for Users.js */}
-              <Route path="/admin/*" element={<AdminPanel />} />
+              {/* access: admin only */}
+              <Route path="/admin/*" element={<AdminRoute element={<AdminPanel />} />} />
               {/* Footer Routes */}
               <Route path="/testimonials" element={<CustomerStories />} />
               <Route path="/pet-health" element={<PetHealthManagement />} />
@@ -80,8 +92,7 @@ function App() {
             <BackToTop />
           </>
         )}
-      </AnimatePresence>
-    </AuthProvider>
+    </AnimatePresence>
   );
 }
 

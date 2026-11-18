@@ -32,7 +32,7 @@ exports.loginUser = async (req, res) => {
     // Generate JWT token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.json({ message: 'Login successful', token });
+    res.json({ message: 'Login successful', token, user: { id: user._id, email: user.email, username: user.username, role: user.role || 'user' } });
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
   }
@@ -172,6 +172,10 @@ exports.updateUser = async (req, res) => {
 exports.patchUser = async (req, res) => {
   try {
     const updateData = { ...req.body };
+    // Never allow privilege escalation or id tampering through a request body.
+    delete updateData.role;
+    delete updateData._id;
+    delete updateData.__v;
     if (updateData.password) {
       updateData.password = await bcrypt.hash(updateData.password, 10);
     }
